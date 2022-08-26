@@ -10,12 +10,12 @@ on:
         type: string
         required: true
  
- jobs:
-   job1:
-     name: Primeiro job de teste
-     runs-on: ubuntu-latest
-     steps:
-      - name: "primeiro step"
-        run: echo "${{ inputs.var_1 }}"
-      - name: "segundo step"
-        runs: echo "${{ inputs.var_2 }}"
+jobs:
+  job1:
+    name: Primeiro job de teste
+    runs-on: ubuntu-latest
+    steps:
+    - name: "primeiro step"
+      run: echo "${{ inputs.var_1 }}"
+    - name: "segundo step"
+      run: echo "${{ inputs.var_2 }}"
