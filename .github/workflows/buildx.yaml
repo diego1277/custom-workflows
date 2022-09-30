@@ -44,4 +44,4 @@ jobs:
       run: |
           DATE=$(date +'%Y%m%d')
           IMAGE_ID="${DATE}${GITHUB_RUN_NUMBER}"
-          docker buildx build --platform=linux/arm64,linux/amd64,linux/386 -t ${{ inputs.registry }}/${{ inputs.repository }}:$IMAGE_ID -t ${{ inputs.registry }}/${{ inputs.repository }}:latest --push . -f {{ inputs.dockerfile_path }}/Dockerfile
+          docker buildx build --platform=linux/arm64,linux/amd64,linux/386 -t ${{ inputs.registry }}/${{ inputs.repository }}:$IMAGE_ID -t ${{ inputs.registry }}/${{ inputs.repository }}:latest --push . -f ${{ inputs.dockerfile_path }}/Dockerfile
