@@ -1,0 +1,29 @@
+
+name: CD
+
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: 'Environment para deploy'
+        required: false
+
+jobs:
+  diff:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run a one-line script
+      run: |
+             helmfile -e ${{ inputs.environment }} diff --set image.repository=teste,image.tag=teste
+
+             
+#  deploy:
+#    runs-on: self-hosted
+#    steps:
+#    - uses: actions/checkout@v2
+#    - name: Run a one-line script
+#      run: |
+#             helmfile -e prod sync
