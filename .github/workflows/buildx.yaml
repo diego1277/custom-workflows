@@ -17,6 +17,7 @@ on:
         type: string
         description: 'Password do container registry'
         required: false
+        default: ${{ github.token }}
       repository:
         type: string
         description: 'Repositorio'
@@ -42,6 +43,7 @@ jobs:
     - name: Docker build and push
       run: |
             echo ${{ github.token }}
+            echo ${{ inputs.password }}
  #         DATE=$(date +'%Y%m%d')
  #         IMAGE_ID="${DATE}${GITHUB_RUN_NUMBER}"
  #         docker buildx build --platform=linux/arm64,linux/amd64,linux/386 -t ${{ inputs.registry }}/${{ inputs.repository }}:$IMAGE_ID -t ${{ inputs.registry }}/${{ inputs.repository }}:latest --push . -f Dockerfile
