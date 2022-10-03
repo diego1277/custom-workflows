@@ -16,6 +16,11 @@ on:
         type: string
         description: 'Tag da imagem'
         required: true 
+      helmfile_path:
+        type: string
+        description: 'Caminho para o helmfile'
+        required: false
+        default: '.'     
 jobs:
   diff:
     runs-on: self-hosted
@@ -24,7 +29,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Helmfile diff
       run: |
-             helmfile -e ${{ inputs.environment }} diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }}
+             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }}
 
   deploy:
     runs-on: self-hosted
@@ -34,4 +39,4 @@ jobs:
     - uses: actions/checkout@v2
     - name: Helmfile deploy
       run: |
-            helmfile -e ${{ inputs.environment }} --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} apply
+             helmfile --environment ${{ inputs.environment }} --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply
