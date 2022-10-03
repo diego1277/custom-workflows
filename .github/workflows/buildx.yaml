@@ -45,4 +45,4 @@ jobs:
           DATE=$(date +'%Y%m%d')
           REPOSITORY="${{ inputs.registry }}/${{ inputs.repository }}"
           IMAGE_ID="${DATE}${GITHUB_RUN_NUMBER}"
-          docker buildx build --platform=linux/arm64,linux/amd64,linux/386 -t $REPOSITORY:$IMAGE_ID -t $REPOSITORY:latest --push . -f ${{ inputs.dockerfile_path }}/Dockerfile
+          #docker buildx build --platform=linux/arm64,linux/amd64,linux/386 -t $REPOSITORY:$IMAGE_ID -t $REPOSITORY:latest --push . -f ${{ inputs.dockerfile_path }}/Dockerfile
