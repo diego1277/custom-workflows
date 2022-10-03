@@ -1,7 +1,6 @@
 
 name: CD
 
-
 on:
   workflow_call:
     inputs:
@@ -9,7 +8,14 @@ on:
         type: string
         description: 'Environment para deploy'
         required: false
-
+      repository:
+        type: string
+        description: 'Repositorio da imagem'
+        required: false      
+      tag:
+        type: string
+        description: 'Tag da imagem'
+        required: false      
 jobs:
   diff:
     runs-on: self-hosted
@@ -17,7 +23,9 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run a one-line script
       run: |
-             helmfile -e ${{ inputs.environment }} diff --set image.repository=teste,image.tag=teste
+            echo ${{ inputs.repository }}
+            echo ${{ inputs.tag }}
+#             helmfile -e ${{ inputs.environment }} diff --set image.repository=teste,image.tag=teste
 
              
 #  deploy:
