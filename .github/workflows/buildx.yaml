@@ -30,6 +30,9 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      repository: ${{ steps.build_push.outputs.repository }}
+      tag: ${{ steps.build_push.outputs.tag }}
     steps:
     - uses: actions/checkout@v3
     - name: Log in to the Container registry
@@ -41,8 +44,11 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
     - name: Docker build and push
+      id: build_push
       run: |
           DATE=$(date +'%Y%m%d')
           REPOSITORY="${{ inputs.registry }}/${{ inputs.repository }}"
-          IMAGE_ID="${DATE}${GITHUB_RUN_NUMBER}"
-          #docker buildx build --platform=linux/arm64,linux/amd64,linux/386 -t $REPOSITORY:$IMAGE_ID -t $REPOSITORY:latest --push . -f ${{ inputs.dockerfile_path }}/Dockerfile
+          TAG="${DATE}${GITHUB_RUN_NUMBER}"
+          echo "::set-output name=repository::$REPOSITORY"
+          echo "::set-output name=tag::$TAG"
+#          docker buildx build --platform=linux/arm64,linux/amd64,linux/386 -t $REPOSITORY:$TAG -t $REPOSITORY:latest --push . -f ${{ inputs.dockerfile_path }}/Dockerfile
