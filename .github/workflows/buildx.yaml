@@ -57,7 +57,9 @@ jobs:
           DATE=$(date +'%Y%m%d')
           REPOSITORY="${{ inputs.registry }}/${{ inputs.repository }}"
           TAG="${DATE}${GITHUB_RUN_NUMBER}"
+          
+          docker buildx build --platform=linux/arm64,linux/amd64,linux/386 -t $REPOSITORY:$TAG -t $REPOSITORY:latest --push . -f ${{ inputs.dockerfile_path }}/Dockerfile
+
           echo "::set-output name=repository::$REPOSITORY"
           echo "::set-output name=tag::$TAG"
-#          docker buildx build --platform=linux/arm64,linux/amd64,linux/386 -t $REPOSITORY:$TAG -t $REPOSITORY:latest --push . -f ${{ inputs.dockerfile_path }}/Dockerfile
 
