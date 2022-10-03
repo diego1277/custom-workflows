@@ -19,7 +19,7 @@ on:
 jobs:
   diff:
     runs-on: self-hosted
-    name: Helfile diff
+    name: Helmfile diff
     steps:
     - uses: actions/checkout@v2
     - name: Helmfile diff
