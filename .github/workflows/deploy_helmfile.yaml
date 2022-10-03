@@ -22,17 +22,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Run a one-line script
+    - name: Helmfile diff
       run: |
             echo ${{ inputs.repository }}
             echo ${{ inputs.tag }}
 #             helmfile -e ${{ inputs.environment }} diff --set image.repository=teste,image.tag=teste
 
              
-#  deploy:
-#    runs-on: self-hosted
-#    steps:
-#    - uses: actions/checkout@v2
-#    - name: Run a one-line script
-#      run: |
+  deploy:
+    #runs-on: self-hosted
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    needs: [diff] 
+    steps:
+    - uses: actions/checkout@v2
+    - name: Helmfile deploy
+      run: |
+              echo ${{ inputs.repository }}
+              echo ${{ inputs.tag }}
 #             helmfile -e prod sync
