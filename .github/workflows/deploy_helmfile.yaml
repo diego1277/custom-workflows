@@ -7,15 +7,15 @@ on:
       environment:
         type: string
         description: 'Environment para deploy'
-        required: false
+        required: true
       repository:
         type: string
         description: 'Repositorio da imagem'
-        required: false      
+        required: true   
       tag:
         type: string
         description: 'Tag da imagem'
-        required: false      
+        required: true 
 jobs:
   diff:
     runs-on: self-hosted
