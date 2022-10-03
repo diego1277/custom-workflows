@@ -52,3 +52,11 @@ jobs:
           echo "::set-output name=repository::$REPOSITORY"
           echo "::set-output name=tag::$TAG"
 #          docker buildx build --platform=linux/arm64,linux/amd64,linux/386 -t $REPOSITORY:$TAG -t $REPOSITORY:latest --push . -f ${{ inputs.dockerfile_path }}/Dockerfile
+  aux:
+    runs-on: ubuntu-latest
+    needs: [buildx]
+    steps:
+    - name: aux
+      run: |
+        ${{ steps.build_push.outputs.tag }}
+        ${{ steps.buildx.outputs.tag }}
