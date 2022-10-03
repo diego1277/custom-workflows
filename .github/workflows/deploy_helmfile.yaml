@@ -18,26 +18,20 @@ on:
         required: true 
 jobs:
   diff:
-    #runs-on: self-hosted
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    name: Helfile diff
     steps:
     - uses: actions/checkout@v2
     - name: Helmfile diff
       run: |
-            echo ${{ inputs.repository }}
-            echo ${{ inputs.tag }}
-#             helmfile -e ${{ inputs.environment }} diff --set image.repository=teste,image.tag=teste
+             helmfile -e ${{ inputs.environment }} diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }}
 
-             
   deploy:
-    #runs-on: self-hosted
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    runs-on: self-hosted
+    name: Helmfile deploy
     needs: [diff] 
     steps:
     - uses: actions/checkout@v2
     - name: Helmfile deploy
       run: |
-              echo ${{ inputs.repository }}
-              echo ${{ inputs.tag }}
-#             helmfile -e prod sync
+            helmfile -e ${{ inputs.environment }} --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} apply
