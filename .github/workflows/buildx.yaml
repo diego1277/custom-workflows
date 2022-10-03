@@ -23,6 +23,13 @@ on:
         description: 'Repositorio'
         required: false
         default: ${{ github.repository }}
+    outputs:
+      repository:
+        description: "Repositorio"
+        value: ${{ jobs.buildx.outputs.repository }}
+      tag:
+        description: "Id da tag"
+        value: ${{ jobs.buildx.outputs.tag }}
  
 jobs:
   buildx:
