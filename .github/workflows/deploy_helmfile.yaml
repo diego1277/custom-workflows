@@ -39,4 +39,4 @@ jobs:
     - uses: actions/checkout@v2
     - name: Helmfile deploy
       run: |
-             helmfile --environment ${{ inputs.environment }} --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply
+             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
