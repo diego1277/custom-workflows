@@ -24,7 +24,7 @@ on:
 jobs:
   diff:
     runs-on: self-hosted
-    name: Helmfile diff
+    name: helmfile diff ${{ inputs.environment }}
     steps:
     - uses: actions/checkout@v2
     - name: Helmfile diff
@@ -33,7 +33,7 @@ jobs:
 
   deploy:
     runs-on: self-hosted
-    name: Helmfile deploy
+    name: helmfile deploy ${{ inputs.environment }}
     needs: [diff] 
     steps:
     - uses: actions/checkout@v2
