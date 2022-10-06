@@ -28,7 +28,7 @@ on:
         default: '.'     
 jobs:
   diff:
-    runs-on: self-hosted
+    runs-on: [ doliveiraorg-k8s-runner ]
     name: helmfile diff ${{ inputs.environment }}
     steps:
     - uses: actions/checkout@v2
