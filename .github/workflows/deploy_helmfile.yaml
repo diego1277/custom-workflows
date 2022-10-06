@@ -16,6 +16,11 @@ on:
         type: string
         description: 'Tag da imagem'
         required: true 
+      helm_version:
+        type: string
+        description: 'versao do helm'
+        required: false
+        default: '3.7.0'
       helmfile_path:
         type: string
         description: 'Caminho para o helmfile'
@@ -27,9 +32,17 @@ jobs:
     name: helmfile diff ${{ inputs.environment }}
     steps:
     - uses: actions/checkout@v2
-    - name: Helmfile diff
-      run: |
-             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }}
+    - name: Helm tool installer
+      uses: Azure/setup-helm@v3.3
+      with:
+        version: ${{ inputs.helm_version }}
+    - name: teste helm
+      run: | 
+           helm version
+     
+#    - name: Helmfile diff
+#      run: |
+#             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }}
 
   deploy:
     runs-on: self-hosted
@@ -37,6 +50,9 @@ jobs:
     needs: [diff] 
     steps:
     - uses: actions/checkout@v2
-    - name: Helmfile deploy
+    - name: teste deploy
       run: |
-             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
+             helm version
+#    - name: Helmfile deploy
+#      run: |
+#             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
