@@ -22,3 +22,9 @@ runs:
           mv helmfile_linux_arm64 helmfile && chmod 777 helmfile && sudo mv helmfile /usr/local/bin
           helmfile --version
      shell: bash
+  - name: Install helmfile diff
+    run: |
+           helm plugin install https://github.com/databus23/helm-diff
+           
+           helm plugin list | grep xdiff && echo "plugin diff instalado com sucesso" || echo "plugin diff nao foi instalado" && exit 1       
+    shell: bash
