@@ -18,8 +18,7 @@ runs:
       version: ${{ inputs.helm_version }}
   -  name: Install helmfile
      run: |
-           pwd
+          curl -L -O https://github.com/roboll/helmfile/releases/download/v${{ inputs.helmfile_version }}/helmfile_linux_amd64
+          mv helmfile_linux_amd64 helmfile && chmod 777 helmfile && sudo mv helmfile /usr/local/bin
+          helmfile --version
      shell: bash
-#curl -L -O https://github.com/roboll/helmfile/releases/download/v${{ inputs.helmfile_version }}/helmfile_linux_amd64
-#sudo mv helmfile_linux_amd64 helmfile && chmod 777 helmfile && mv helmfile /usr/local/bin
-#helmfile --version
