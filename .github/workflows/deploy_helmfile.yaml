@@ -32,27 +32,20 @@ jobs:
     name: helmfile diff ${{ inputs.environment }}
     steps:
     - uses: actions/checkout@v2
-    - name: Helm tool installer
-      uses: Azure/setup-helm@v3.3
-#      with:
-#        version: ${{ inputs.helm_version }}
-    - name: teste helm
-      run: | 
-           helm version
-     
-#    - name: Helmfile diff
-#      run: |
-#             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }}
-
-  deploy:
-    runs-on: [ doliveiraorg-k8s-runner ]
-    name: helmfile deploy ${{ inputs.environment }}
-    needs: [diff] 
-    steps:
-    - uses: actions/checkout@v2
-    - name: teste deploy
+    - uses: doliveiraorg/custom-workflows/.github/actions/helmfile@main
+    - name: Helmfile diff
       run: |
-             helm version
+             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }}
+
+#  deploy:
+#    runs-on: [ doliveiraorg-k8s-runner ]
+#    name: helmfile deploy ${{ inputs.environment }}
+#    needs: [diff] 
+#    steps:
+#    - uses: actions/checkout@v2
+#    - name: teste deploy
+#      run: |
+#             helm version
 #    - name: Helmfile deploy
 #      run: |
 #             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
