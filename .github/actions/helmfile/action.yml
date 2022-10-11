@@ -24,6 +24,5 @@ runs:
      shell: bash
   - name: Install helmfile diff
     run: |
-          helm plugin install https://github.com/databus23/helm-diff
-          helm plugin list | grep diff && echo "plugin diff instalado com sucesso" || echo "plugin diff nao foi instalado" && exit 1       
+          helm plugin install https://github.com/databus23/helm-diff     
     shell: bash
