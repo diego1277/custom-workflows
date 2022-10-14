@@ -37,15 +37,15 @@ jobs:
       run: |
              helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }}
 
-#  deploy:
-#    runs-on: [ doliveiraorg-k8s-runner ]
-#    name: helmfile deploy ${{ inputs.environment }}
-#    needs: [diff] 
-#    steps:
-#    - uses: actions/checkout@v2
-#    - name: teste deploy
-#      run: |
-#             helm version
-#    - name: Helmfile deploy
-#      run: |
-#             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
+  deploy:
+    runs-on: [ doliveiraorg-k8s-runner ]
+    name: helmfile deploy ${{ inputs.environment }}
+    needs: [diff] 
+    steps:
+    - uses: actions/checkout@v2
+    - name: teste deploy
+      run: |
+             helm version
+    - name: Helmfile deploy
+      run: |
+             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
