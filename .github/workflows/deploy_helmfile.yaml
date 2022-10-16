@@ -52,7 +52,7 @@ jobs:
     - name: Manual Workflow Approval
       uses: trstringer/manual-approval@v1.6.0
       with:
-       approvers: org_approvers
+       approvers: diego1277
        secret: ${{ secrets.GITHUB_TOKEN }}
        minimum-approvals: ${{ inputs.deploy_min_approvers }}
 
