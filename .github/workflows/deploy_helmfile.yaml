@@ -27,25 +27,24 @@ on:
         required: false
         default: '.'     
 jobs:
-  diff:
-    runs-on: [ doliveiraorg-k8s-runner ]
-    name: helmfile diff ${{ inputs.environment }}
-    steps:
-    - uses: actions/checkout@v2
-    - uses: doliveiraorg/custom-workflows/.github/actions/helmfile@main
-    - name: Helmfile diff
-      run: |
-             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }}
-
   deploy:
-    runs-on: [ doliveiraorg-k8s-runner ]
-    name: helmfile deploy ${{ inputs.environment }}
-    needs: [diff] 
+    #runs-on: [ doliveiraorg-k8s-runner ]
+    runs-on: ubuntu-latest
+    name: deploy ${{ inputs.environment }}
     steps:
     - uses: actions/checkout@v2
-    - name: teste deploy
+#    - uses: doliveiraorg/custom-workflows/.github/actions/helmfile@main
+    - name: helmfile diff
       run: |
-             helm version
-    - name: Helmfile deploy
+              echo "helm diff"
+#             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }}           
+    - name: Manual Workflow Approval
+      uses: trstringer/manual-approval@v1.6.0
+      with:
+       approvers: diego1277
+       secret: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: helmfile deploy ${{ inputs.environment }}
       run: |
-             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
+              echo "helm file deploy"
+#             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
