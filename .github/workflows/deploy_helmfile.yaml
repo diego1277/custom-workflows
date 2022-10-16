@@ -25,7 +25,18 @@ on:
         type: string
         description: 'Caminho para o helmfile'
         required: false
-        default: '.'     
+        default: '.' 
+      deploy_approvers:
+        type: string
+        description: 'aprovadores'
+        required: false
+        default: 'org_approvers'
+      deploy_min_approvers:
+        type: number
+        description: 'qtd de aprovadores'
+        required: false
+        default: 1
+        
 jobs:
   deploy:
     #runs-on: [ doliveiraorg-k8s-runner ]
@@ -41,8 +52,10 @@ jobs:
     - name: Manual Workflow Approval
       uses: trstringer/manual-approval@v1.6.0
       with:
-       approvers: diego1277
+       approvers: ${{ inputs.deploy_approvers }}
        secret: ${{ secrets.GITHUB_TOKEN }}
+       minimum-approvals: ${{ inputs.deploy_min_approvers }}
+       issue-title: "Approve required env ${{ inputs.environment }}"
 
     - name: helmfile deploy ${{ inputs.environment }}
       run: |
