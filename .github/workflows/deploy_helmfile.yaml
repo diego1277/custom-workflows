@@ -55,7 +55,6 @@ jobs:
        approvers: ${{ inputs.deploy_approvers }}
        secret: ${{ secrets.GITHUB_TOKEN }}
        minimum-approvals: ${{ inputs.deploy_min_approvers }}
-       issue-title: "Approve required env ${{ inputs.environment }}"
 
     - name: helmfile deploy ${{ inputs.environment }}
       run: |
