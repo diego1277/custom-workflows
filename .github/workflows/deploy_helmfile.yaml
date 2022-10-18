@@ -58,7 +58,7 @@ jobs:
        approvers: diego1277
        secret: ${{ secrets.GITHUB_TOKEN }}
        minimum-approvals: ${{ inputs.deploy_min_approvers }}
-       
+   
   deploy:
     runs-on: [ doliveiraorg-k8s-runner ]
     name: deploy ${{ inputs.environment }}
