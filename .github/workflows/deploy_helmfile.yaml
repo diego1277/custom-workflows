@@ -48,16 +48,10 @@ jobs:
       run: |
              helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }}  
   approve:
-    runs-on: ubuntu-latest
-    name: approve ${{ inputs.environment }}
+    uses: doliveiraorg/custom-workflows/.github/workflows/approve.yaml@main
     needs: [diff]
-    steps:
-    - name: Manual Workflow Approval
-      uses: trstringer/manual-approval@v1.6.0
-      with:
-       approvers: diego1277
-       secret: ${{ secrets.GITHUB_TOKEN }}
-       minimum-approvals: ${{ inputs.deploy_min_approvers }}
+    with:
+      environment: hom
    
   deploy:
     runs-on: [ doliveiraorg-k8s-runner ]
