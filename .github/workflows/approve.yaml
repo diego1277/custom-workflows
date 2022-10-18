@@ -1,0 +1,32 @@
+name: Approve
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: 'Environment para deploy'
+        required: true
+      deploy_approvers:
+        type: string
+        description: 'aprovadores'
+        required: false
+        default: 'org_approvers'
+      deploy_min_approvers:
+        type: number
+        description: 'qtd de aprovadores'
+        required: false
+        default: 1
+        
+jobs:
+  approve:
+    runs-on: ubuntu-latest
+    name: approve ${{ inputs.environment }}
+    needs: [diff]
+    steps:
+    - name: Manual Workflow Approval
+      uses: trstringer/manual-approval@v1.6.0
+      with:
+       approvers: diego1277
+       secret: ${{ secrets.GITHUB_TOKEN }}
+       minimum-approvals: ${{ inputs.deploy_min_approvers }}
