@@ -38,9 +38,9 @@ on:
         default: 1
         
 jobs:
-  deploy:
+  diff:
     runs-on: [ doliveiraorg-k8s-runner ]
-    name: deploy ${{ inputs.environment }}
+    name: diff ${{ inputs.environment }}
     steps:
     - uses: actions/checkout@v2
     - name: helmfile setup
@@ -54,6 +54,10 @@ jobs:
        approvers: diego1277
        secret: ${{ secrets.GITHUB_TOKEN }}
        minimum-approvals: ${{ inputs.deploy_min_approvers }}
+  deploy:
+    runs-on: [ doliveiraorg-k8s-runner ]
+    name: deploy ${{ inputs.environment }}
+    steps:
     - name: helmfile deploy ${{ inputs.environment }}
       run: |
              helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
