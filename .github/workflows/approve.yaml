@@ -22,7 +22,6 @@ jobs:
   approve:
     runs-on: ubuntu-latest
     name: approve ${{ inputs.environment }}
-    needs: [diff]
     steps:
     - name: Manual Workflow Approval
       uses: trstringer/manual-approval@v1.6.0
