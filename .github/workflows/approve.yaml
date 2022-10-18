@@ -19,7 +19,7 @@ on:
         default: 1
         
 jobs:
-  approve:
+  manual:
     runs-on: ubuntu-latest
     name: approve ${{ inputs.environment }}
     steps:
