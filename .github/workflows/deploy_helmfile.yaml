@@ -52,13 +52,13 @@ jobs:
              helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} | tee diff.log
              TEMP="$(cat diff.log)"
              HELMFILE_DEPLOY="false"
-             echo $TEMP 
-#             | grep -we "changed"
+         
+             echo $TEMP | grep -we "added"
 
-#             if [ $? -eq 0 ]
-#             then
-#                  HELMFILE_DEPLOY="true"
-#             fi            
+             if [ $? -eq 0 ]
+             then
+               HELMFILE_DEPLOY="true"
+             fi       
              
   deploy:
     runs-on: [ doliveiraorg-k8s-runner ]
