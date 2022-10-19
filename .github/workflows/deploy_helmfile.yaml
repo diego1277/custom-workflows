@@ -53,13 +53,14 @@ jobs:
              TEMP="$(cat diff.log)"
              HELMFILE_DEPLOY="false"
          
-             echo $TEMP | grep -we "added"
+             echo $TEMP | grep -wE 'removed|added|changed'
 
              if [ $? -eq 0 ]
              then
                HELMFILE_DEPLOY="true"
              fi       
              
+             echo "helmfile_deploy=$HELMFILE_DEPLOY" > $GITHUB_OUTPUT
   deploy:
     runs-on: [ doliveiraorg-k8s-runner ]
     needs: diff
