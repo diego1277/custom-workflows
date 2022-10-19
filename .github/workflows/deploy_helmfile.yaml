@@ -53,27 +53,29 @@ jobs:
              TEMP="$(cat diff.log)"
              HELMFILE_DEPLOY="true"
          
-             echo $TEMP | grep -wE 'removed|added|changed|DELETED' || HELMFILE_DEPLOY="true" 
-
-  approve:
-    runs-on: [ doliveiraorg-k8s-runner ]
-    needs: diff
-    if: needs.diff.outputs.helmfile_deploy == 'true'
-    steps:
-    - name: deploy
-      run: |
-             echo ${{ needs.diff.outputs.helmfile_deploy }}
+             echo $TEMP | grep -wE 'removed|added|changed|DELETED' || HELMFILE_DEPLOY="true"
              
-  deploy:
-    runs-on: [ doliveiraorg-k8s-runner ]
-    name: deploy ${{ inputs.environment }}
-    needs: [approve]
-    steps:
-    - name: helmfile setup
-      uses: doliveiraorg/custom-workflows/.github/actions/helmfile@main    
-    - name: helmfile deploy ${{ inputs.environment }}
-      run: |
-             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
+             echo $HELMFILE_DEPLOY
+
+#  approve:
+#    runs-on: [ doliveiraorg-k8s-runner ]
+#    needs: diff
+#    if: needs.diff.outputs.helmfile_deploy == 'true'
+#    steps:
+#    - name: deploy
+#      run: |
+#             echo ${{ needs.diff.outputs.helmfile_deploy }}
+             
+#  deploy:
+#    runs-on: [ doliveiraorg-k8s-runner ]
+#    name: deploy ${{ inputs.environment }}
+#    needs: [approve]
+#    steps:
+#    - name: helmfile setup
+#      uses: doliveiraorg/custom-workflows/.github/actions/helmfile@main    
+#    - name: helmfile deploy ${{ inputs.environment }}
+#      run: |
+#             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
 
 #  approve:
 #    uses: doliveiraorg/custom-workflows/.github/workflows/approve.yaml@main
