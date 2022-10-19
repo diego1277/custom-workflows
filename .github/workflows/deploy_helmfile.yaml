@@ -64,9 +64,7 @@ jobs:
   deploy:
     runs-on: [ doliveiraorg-k8s-runner ]
     needs: diff
-    env:
-      HELMFILE_DEPLOY: false
-    if: ${{ env.HELMFILE_DEPLOY }} == "true" 
+    if: ${{ needs.diff.outputs.helmfile_deploy }} == true
     steps:
     - name: deploy
       run: |
