@@ -1,0 +1,25 @@
+name: "setup-terraform"
+description: "setup terraform"
+inputs:
+  helm_version:
+    required: false
+    description: 'versao do helm'
+    default: '3.7.0'
+  helmfile_version:
+    required: false
+    description: 'versao do helmfile'
+    default: '0.144.0'  
+runs:
+  using: "composite"
+  steps:
+  - name: "Configure AWS Credentials" Action For GitHub Actions
+    uses: aws-actions/configure-aws-credentials@v1
+    with:
+      aws-access-key-id:
+      aws-secret-access-key:
+      aws-session-token:
+      aws-region: 
+  - name: HashiCorp - Setup Terraform
+    uses: hashicorp/setup-terraform@v2.0.2
+    with:
+      terraform_version: 
