@@ -64,10 +64,9 @@ jobs:
   deploy:
     runs-on: [ doliveiraorg-k8s-runner ]
     needs: diff
-    
+    if: needs.diff.outputs.helmfile_deploy == 'true'
     steps:
     - name: deploy
-      if: needs.diff.outputs.helmfile_deploy == "true"
       run: |
              echo ${{ needs.diff.outputs.helmfile_deploy }}
              
