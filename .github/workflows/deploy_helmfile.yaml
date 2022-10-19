@@ -54,10 +54,10 @@ jobs:
              HELMFILE_DEPLOY="false"
              echo $TEMP | grep -we "changed"
 
-             if [ $? -eq 0 ]
-             then
-                  HELMFILE_DEPLOY="true"
-             fi            
+#             if [ $? -eq 0 ]
+#             then
+#                  HELMFILE_DEPLOY="true"
+#             fi            
              
   deploy:
     runs-on: [ doliveiraorg-k8s-runner ]
