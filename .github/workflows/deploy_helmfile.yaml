@@ -50,7 +50,7 @@ jobs:
       id: helmfile_diff
       run: |
              helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} | tee diff.log
-             
+             ls -1
 
   deploy:
     runs-on: [ doliveiraorg-k8s-runner ]
