@@ -55,6 +55,8 @@ jobs:
          
              echo $TEMP | grep -wE 'removed|added|changed|DELETED' || HELMFILE_DEPLOY="true"
              
+             echo "helmfile_deploy=$HELMFILE_DEPLOY" > $GITHUB_OUTPUT
+             
              echo $HELMFILE_DEPLOY
 
   approve:
