@@ -51,15 +51,15 @@ jobs:
       run: |
              helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} | tee diff.log
              TEMP="$(cat diff.log)"
-             HELMFILE_DEPLOY="false"
+             HELMFILE_DEPLOY="true"
          
-             echo $TEMP | grep -wE 'removed|added|changed'
+             echo $TEMP | grep -wE 'removed|added|changed' || HELMFILE_DEPLOY="true" 
 
-             if [ $? -eq 0 ]
-             then
-               HELMFILE_DEPLOY="true"
-             fi       
-             echo "helmfile_deploy=$HELMFILE_DEPLOY" > $GITHUB_OUTPUT
+#             if [ $? -eq 0 ]
+#             then
+#               HELMFILE_DEPLOY="true"
+#             fi       
+#             echo "helmfile_deploy=$HELMFILE_DEPLOY" > $GITHUB_OUTPUT
   approve:
     runs-on: [ doliveiraorg-k8s-runner ]
     needs: diff
