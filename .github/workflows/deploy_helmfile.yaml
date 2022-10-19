@@ -59,7 +59,7 @@ jobs:
              then
                HELMFILE_DEPLOY="true"
              fi       
-             
+             HELMFILE_DEPLOY="false"
              echo "helmfile_deploy=$HELMFILE_DEPLOY" > $GITHUB_OUTPUT
   deploy:
     runs-on: [ doliveiraorg-k8s-runner ]
