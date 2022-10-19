@@ -67,7 +67,7 @@ jobs:
     
     steps:
     - name: deploy
-      if: needs.diff.outputs.helmfile_deploy }} == "true"
+      if: needs.diff.outputs.helmfile_deploy == "true"
       run: |
              echo ${{ needs.diff.outputs.helmfile_deploy }}
              
