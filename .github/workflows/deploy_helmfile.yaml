@@ -63,7 +63,7 @@ jobs:
              echo "helmfile_deploy=$HELMFILE_DEPLOY" > $GITHUB_OUTPUT
   deploy:
     runs-on: [ doliveiraorg-k8s-runner ]
-    if: ${{ needs.diff.outputs.helmfile_deploy == "true" }} 
+    if: needs.diff.outputs.helmfile_deploy == "true" 
     needs: diff
     steps:
     - name: deploy
