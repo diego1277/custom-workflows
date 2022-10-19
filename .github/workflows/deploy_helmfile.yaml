@@ -68,7 +68,7 @@ jobs:
     steps:
     - name: deploy
       run: |
-             echo "working"
+             echo ${{ needs.diff.outputs.helmfile_deploy }}
              
 
 #  approve:
