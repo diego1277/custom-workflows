@@ -53,7 +53,7 @@ jobs:
               
              HELMFILE_DEPLOY="true"
 
-             if grep -wE 'No affected releases' diff.log;then
+             if grep -qwE 'No affected releases' diff.log;then
                 HELMFILE_DEPLOY="false"
              fi
 
