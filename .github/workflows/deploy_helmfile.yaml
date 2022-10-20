@@ -49,15 +49,15 @@ jobs:
     - name: helmfile diff
       id: helmfile_diff
       run: |
-             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} | tee diff.log
-             TEMP="$(cat diff.log)"
-             HELMFILE_DEPLOY="false"
-         
-             echo $TEMP | grep -wE 'removed|added|changed|DELETED' || HELMFILE_DEPLOY="true"
-             
+             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml diff --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} --detailed-exitcode 2>&1 | tee diff.log 
+              
+             HELMFILE_DEPLOY="true"
+
+             if grep -wE 'No affected releases' diff.log;then
+                HELMFILE_DEPLOY="false"
+             fi
+
              echo "helmfile_deploy=$HELMFILE_DEPLOY" > $GITHUB_OUTPUT
-             
-             echo $HELMFILE_DEPLOY
 
   approve:
     runs-on: [ doliveiraorg-k8s-runner ]
