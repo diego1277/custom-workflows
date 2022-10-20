@@ -68,16 +68,16 @@ jobs:
       run: |
              echo ${{ needs.diff.outputs.helmfile_deploy }}
              
-#  deploy:
-#    runs-on: [ doliveiraorg-k8s-runner ]
-#    name: deploy ${{ inputs.environment }}
-#    needs: [approve]
-#    steps:
-#    - name: helmfile setup
-#      uses: doliveiraorg/custom-workflows/.github/actions/helmfile@main    
-#    - name: helmfile deploy ${{ inputs.environment }}
-#      run: |
-#             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
+  deploy:
+    runs-on: [ doliveiraorg-k8s-runner ]
+    name: deploy ${{ inputs.environment }}
+    needs: [approve]
+    steps:
+    - name: helmfile setup
+      uses: doliveiraorg/custom-workflows/.github/actions/helmfile@main    
+    - name: helmfile deploy ${{ inputs.environment }}
+      run: |
+             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
 
 #  approve:
 #    uses: doliveiraorg/custom-workflows/.github/workflows/approve.yaml@main
