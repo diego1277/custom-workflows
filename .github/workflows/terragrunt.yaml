@@ -33,10 +33,12 @@ jobs:
       uses: doliveiraorg/custom-workflows/.github/actions/terraform@main
       with:
         terraform_version: ${{ inputs.terraform_version }}       
-        aws_access_key_id: ${{ inputs.aws_access_key_id }}
-        aws_secret_access_key: ${{ inputs.aws_secret_access_key }}
-        aws_region: ${{ inputs.aws_region }}
-        
+    - name: "Configure AWS Credentials"
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: "${{ inputs.aws_access_key_id }}"
+        aws-secret-access-key: "${{ inputs.aws_secret_access_key }}"
+        aws-region: "${{ inputs.aws_region }}"       
     - name: terraform plan
       id: plan
       run: |
