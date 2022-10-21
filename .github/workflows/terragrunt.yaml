@@ -21,7 +21,7 @@ jobs:
       uses: doliveiraorg/custom-workflows/.github/actions/terraform@main
       with:
         terraform_version: ${{ inputs.terraform_version }}
-    - name: plan
+    - name: terraform plan
       id: plan
       run: |
              terraform version
