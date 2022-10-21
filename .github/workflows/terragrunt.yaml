@@ -6,9 +6,21 @@ on:
     inputs:
       terraform_version:
         type: string
-        description: 'Versao do terraform'
+        description: 'versao do terraform'
         default: 1.3.3
         required: false
+      aws_access_key_id:
+        type: string
+        required: true
+        description: 'aws key id'
+      aws_secret_access_key:
+        type: string
+        required: true
+        description: 'aws secret'
+      aws_region:
+        type: string
+        required: true
+        description: 'aws region'        
         
 jobs:
   plan:
@@ -20,7 +32,11 @@ jobs:
     - name: terraform setup
       uses: doliveiraorg/custom-workflows/.github/actions/terraform@main
       with:
-        terraform_version: ${{ inputs.terraform_version }}
+        terraform_version: ${{ inputs.terraform_version }}       
+        aws_access_key_id: ${{ inputs.aws_access_key_id }}
+        aws_secret_access_key: ${{ inputs.aws_secret_access_key }}
+        aws_region: ${{ inputs.aws_region }}
+        
     - name: terraform plan
       id: plan
       run: |
