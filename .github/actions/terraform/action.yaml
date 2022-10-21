@@ -28,6 +28,7 @@ runs:
            echo ${{ inputs.AWS_ACCESS_KEY_ID }}
            echo ${{ inputs.AWS_SECRET_ACCESS_KEY }}
            echo ${{ inputs.AWS_REGION }}
+    shell: bash
 #  - name: "Configure AWS Credentials"
 #    uses: aws-actions/configure-aws-credentials@v1
 #    with:
