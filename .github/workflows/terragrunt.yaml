@@ -11,15 +11,15 @@ on:
         required: false
       aws_access_key_id:
         type: string
-        required: true
+        required: false
         description: 'aws key id'
       aws_secret_access_key:
         type: string
-        required: true
+        required: false
         description: 'aws secret'
       aws_region:
         type: string
-        required: true
+        required: false
         description: 'aws region'        
         
 jobs:
@@ -36,9 +36,9 @@ jobs:
     - name: "Configure AWS Credentials"
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: "${{ inputs.aws_access_key_id }}"
-        aws-secret-access-key: "${{ inputs.aws_secret_access_key }}"
-        aws-region: "${{ inputs.aws_region }}"       
+        aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+        aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        aws-region: "${{ secrets.AWS_REGION }}"     
     - name: terraform plan
       id: plan
       run: |
