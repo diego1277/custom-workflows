@@ -25,7 +25,6 @@ on:
 jobs:
   plan:
     #runs-on: [ doliveiraorg-k8s-runner ]
-    #name: diff ${{ inputs.environment }}
     runs-on: [ubuntu-latest]
     name: plan
     steps:
