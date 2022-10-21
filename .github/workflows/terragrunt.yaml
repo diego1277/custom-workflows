@@ -1,0 +1,24 @@
+
+name: Terraform
+
+on:
+  workflow_call:
+    inputs:
+      terraform_version:
+        type: string
+        description: 'Versao do terraform'
+        required: true
+        
+jobs:
+  plan:
+    #runs-on: [ doliveiraorg-k8s-runner ]
+    #name: diff ${{ inputs.environment }}
+    runs-on: [ubuntu-latest]
+    name: plan
+    steps:
+    - name: terraform setup
+      uses: doliveiraorg/custom-workflows/.github/actions/terraform@main
+    - name: plan
+      id: plan
+      run: |
+             terraform version
