@@ -8,15 +8,12 @@ inputs:
   aws_access_key_id:
     required: false
     description: 'aws key id'
-    default: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
   aws_secret_access_key:
     required: false
     description: 'aws secret'
-    default: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
   aws_region:
     required: false
     description: 'aws region'
-    default: "${{ secrets.AWS_REGION }}"
 
 runs:
   using: "composite"
