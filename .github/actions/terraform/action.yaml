@@ -24,13 +24,18 @@ secrets:
 runs:
   using: "composite"
   steps:
-  - name: "Configure AWS Credentials"
-    uses: aws-actions/configure-aws-credentials@v1
-    with:
-      aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-      aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-      aws-region: "${{ secrets.AWS_REGION }}"
-  - name: HashiCorp - Setup Terraform
-    uses: hashicorp/setup-terraform@v2.0.2
-    with:
-      terraform_version: ${{ inputs.terraform_version }}
+  - name: teste
+    run: |
+           echo ${{ secrets.AWS_ACCESS_KEY_ID }}
+           echo ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+           echo ${{ secrets.AWS_REGION }}
+#  - name: "Configure AWS Credentials"
+#    uses: aws-actions/configure-aws-credentials@v1
+#    with:
+#      aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+#      aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+#      aws-region: "${{ secrets.AWS_REGION }}"
+#  - name: HashiCorp - Setup Terraform
+#    uses: hashicorp/setup-terraform@v2.0.2
+#    with:
+#      terraform_version: ${{ inputs.terraform_version }}
