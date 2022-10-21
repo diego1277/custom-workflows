@@ -42,3 +42,4 @@ jobs:
       id: plan
       run: |
              terraform version
+             terragrunt version
