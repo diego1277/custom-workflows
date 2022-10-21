@@ -20,4 +20,4 @@ runs:
   - name: Setup Terragrunt
     uses: autero1/action-terragrunt@v1.1.0
     with:
-      terragrunt_version: ${{ terragrunt_version }}
+      terragrunt_version: ${{ inputs.terragrunt_version }}
