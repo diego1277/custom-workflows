@@ -14,19 +14,19 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - name: teste
-    run: |
-           echo ${{ inputs.aws_access_key_id }}
-           echo ${{ inputs.aws_secret_access_key }}
-           echo ${{ inputs.aws_region }}
-           echo ${{ inputs.terraform_version }}
-    shell: bash
-#  - name: "Configure AWS Credentials"
-#    uses: aws-actions/configure-aws-credentials@v1
-#    with:
-#      aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-#      aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-#      aws-region: "${{ secrets.AWS_REGION }}"
+#  - name: teste
+#    run: |
+#           echo ${{ inputs.aws_access_key_id }}
+#           echo ${{ inputs.aws_secret_access_key }}
+#           echo ${{ inputs.aws_region }}
+#           echo ${{ inputs.terraform_version }}
+#    shell: bash
+  - name: "Configure AWS Credentials"
+    uses: aws-actions/configure-aws-credentials@v1
+    with:
+      aws-access-key-id: "${{ inputs.aws_access_key_id }}"
+      aws-secret-access-key: "${{ inputs.aws_secret_access_key }}"
+      aws-region: "${{ inputs.aws_region }}"
 #  - name: HashiCorp - Setup Terraform
 #    uses: hashicorp/setup-terraform@v2.0.2
 #    with:
