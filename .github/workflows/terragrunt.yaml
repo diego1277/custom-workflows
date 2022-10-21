@@ -7,7 +7,8 @@ on:
       terraform_version:
         type: string
         description: 'Versao do terraform'
-        required: true
+        default: 1.3.3
+        required: false
         
 jobs:
   plan:
@@ -18,6 +19,8 @@ jobs:
     steps:
     - name: terraform setup
       uses: doliveiraorg/custom-workflows/.github/actions/terraform@main
+      with:
+        terraform_version: ${{ inputs.terraform_version }}
     - name: plan
       id: plan
       run: |
