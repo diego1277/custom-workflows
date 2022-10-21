@@ -14,16 +14,22 @@ inputs:
   aws_region:
     required: false
     description: 'aws region'
-
+secrets:
+  AWS_ACCESS_KEY_ID: 
+    required: true
+  AWS_SECRET_ACCESS_KEY: 
+    required: true
+  AWS_REGION: 
+    required: true
 runs:
   using: "composite"
   steps:
   - name: "Configure AWS Credentials"
     uses: aws-actions/configure-aws-credentials@v1
     with:
-      aws-access-key-id: "${{ inputs.aws_access_key_id }}"
-      aws-secret-access-key: "${{ inputs.aws_secret_access_key }}"
-      aws-region: "${{ inputs.aws_region }}"
+      aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+      aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+      aws-region: "${{ secrets.AWS_REGION }}"
   - name: HashiCorp - Setup Terraform
     uses: hashicorp/setup-terraform@v2.0.2
     with:
