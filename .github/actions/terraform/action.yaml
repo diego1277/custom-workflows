@@ -14,7 +14,6 @@ inputs:
   aws_region:
     required: false
     description: 'aws region'
-secrets:
   AWS_ACCESS_KEY_ID: 
     required: true
   AWS_SECRET_ACCESS_KEY: 
@@ -26,9 +25,9 @@ runs:
   steps:
   - name: teste
     run: |
-           echo ${{ secrets.AWS_ACCESS_KEY_ID }}
-           echo ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-           echo ${{ secrets.AWS_REGION }}
+           echo ${{ inputs.AWS_ACCESS_KEY_ID }}
+           echo ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+           echo ${{ inputs.AWS_REGION }}
 #  - name: "Configure AWS Credentials"
 #    uses: aws-actions/configure-aws-credentials@v1
 #    with:
