@@ -21,7 +21,7 @@ runs:
            echo ${{ secrets.aws_secret_access_key }}
            echo ${{ secrets.aws_region }}
            echo ${{ secrets.terraform_version }}
-#    shell: bash
+    shell: bash
 #  - name: "Configure AWS Credentials"
 #    uses: aws-actions/configure-aws-credentials@v1
 #    with:
