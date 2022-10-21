@@ -4,7 +4,12 @@ inputs:
   terraform_version:
     required: false
     description: 'versao do terraform'
-    default: '1.3.3 '
+    default: '1.3.3'
+  terragrunt_version:
+    required: false
+    description: 'versao do terragrunt'
+    default: '0.39.2'
+
 runs:
   using: "composite"
   steps:
@@ -12,3 +17,7 @@ runs:
     uses: hashicorp/setup-terraform@v2.0.2
     with:
       terraform_version: ${{ inputs.terraform_version }}
+  - name: Setup Terragrunt
+    uses: autero1/action-terragrunt@v1.1.0
+    with:
+      terragrunt_version: ${{ terragrunt_version }}
