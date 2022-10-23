@@ -25,7 +25,11 @@ on:
       aws_region:
         type: string
         required: false
-        description: 'aws region'        
+        description: 'aws region'
+      terragrunt_path:
+        type: string
+        required: true
+        description: 'path terragrunt'
         
 jobs:
   plan:
@@ -47,5 +51,5 @@ jobs:
     - name: terraform plan
       id: plan
       run: |
-             terraform version
-             which terragrunt
+             cd ${{ inputs.terragrunt_path }}
+             terragrunt plan
