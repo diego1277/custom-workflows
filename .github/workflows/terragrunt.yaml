@@ -30,6 +30,12 @@ on:
         type: string
         required: true
         description: 'path terragrunt'
+      terragrunt_destroy:
+        type: boolean
+        required: false
+        default: false
+        description: 'habilitar terragrunt destroy'
+      
         
 jobs:
   plan:
@@ -60,4 +66,14 @@ jobs:
       id: plan
       run: |
              terragrunt plan
+      working-directory: ${{ inputs.terragrunt_path }}
+    - name: terraform apply
+      id: apply
+      run: |
+             terragrunt apply
+      working-directory: ${{ inputs.terragrunt_path }}
+    - name: terraform destroy
+      id: destroy
+      run: |
+             terragrunt destroy
       working-directory: ${{ inputs.terragrunt_path }}
