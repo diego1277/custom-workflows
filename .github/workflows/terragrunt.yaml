@@ -48,7 +48,14 @@ jobs:
       with:
         aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
         aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-        aws-region: "${{ secrets.AWS_REGION }}"     
+        aws-region: "${{ secrets.AWS_REGION }}"
+    - name: setup git url.insteadof
+      run: 
+           git config --local --remove-section http."https://github.com/"
+           git config --global url."https://${GH_USER}:${GH_TOKEN}@github.com/doliveiraorg".insteadOf "https://github.com/doliveiraorg"
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        GH_USER: ${{ secrets.GH_USER }}
     - name: terraform plan
       id: plan
       run: |
