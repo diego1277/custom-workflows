@@ -37,6 +37,7 @@ jobs:
     runs-on: [ubuntu-latest]
     name: plan
     steps:
+    - uses: actions/checkout@v2
     - name: terraform setup
       uses: doliveiraorg/custom-workflows/.github/actions/terraform@main
       with:
