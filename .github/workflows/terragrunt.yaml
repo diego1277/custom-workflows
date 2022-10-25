@@ -60,4 +60,4 @@ jobs:
       uses: doliveiraorg/custom-workflows/.github/actions/terragruntm@main
       with:
         terraform_version: ${{ inputs.terraform_version }}       
-        terragrunt_version: ${{ inputs.terragrunt_version }}
+        terragrunt_path: ${{ inputs.terragrunt_path }}
