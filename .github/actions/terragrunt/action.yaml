@@ -9,6 +9,10 @@ inputs:
     required: false
     description: 'versao do terragrunt'
     default: '0.39.2'
+  terragrunt_path:
+    type: string
+    required: true
+    description: 'path terragrunt'
 
 runs:
   using: "composite"
