@@ -61,16 +61,21 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         GH_USER: ${{ secrets.GH_USER }}
-#    - name: terraform plan
-#      id: plan
-#      run: |
-#             terragrunt plan
-#      working-directory: ${{ inputs.terragrunt_path }}
-#    - name: terraform apply
-#      id: apply
-#      run: |
-#             terragrunt apply
-#      working-directory: ${{ inputs.terragrunt_path }}
+    - name: terragrunt init
+      id: init
+      run: |
+             terragrunt init
+      working-directory: ${{ inputs.terragrunt_path }}
+    - name: terragrunt validate
+      id: validate
+      run: |
+             terragrunt validate
+      working-directory: ${{ inputs.terragrunt_path }}      
+    - name: terragrunt plan
+      id: plan
+      run: |
+             terragrunt plan
+      working-directory: ${{ inputs.terragrunt_path }}
 #    - name: terraform destroy
 #      id: destroy
 #      run: |
