@@ -41,7 +41,8 @@ jobs:
     #runs-on: [ doliveiraorg-k8s-runner ]
     runs-on: [ubuntu-latest]
     name: plan
-    steps:          
+    steps:
+    - uses: actions/checkout@v2
     - name: "Configure AWS Credentials"
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -55,7 +56,6 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         GH_USER: ${{ secrets.GH_USER }}
-    - uses: actions/checkout@v2
     - name: terragrunt action
       uses: doliveiraorg/custom-workflows/.github/actions/terragrunt@main
       with:
