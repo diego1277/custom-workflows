@@ -25,5 +25,6 @@ runs:
      shell: bash
   - name: Install helmfile diff
     run: |
-          helm plugin install https://github.com/databus23/helm-diff     
+          helm plugin install https://github.com/databus23/helm-diff
+          helm plugin install https://github.com/aslafy-z/helm-git --version 0.11.1
     shell: bash
