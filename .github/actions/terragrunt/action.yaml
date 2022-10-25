@@ -31,13 +31,16 @@ runs:
     run: |
            terragrunt init
     working-directory: ${{ inputs.terragrunt_path }}
+    shell: bash
   - name: terragrunt validate
     id: validate
     run: |
            terragrunt validate
-    working-directory: ${{ inputs.terragrunt_path }}      
+    working-directory: ${{ inputs.terragrunt_path }} 
+    shell: bash
   - name: terragrunt plan
     id: plan
     run: |
            terragrunt plan
     working-directory: ${{ inputs.terragrunt_path }}
+    shell: bash
