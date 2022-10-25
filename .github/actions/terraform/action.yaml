@@ -21,3 +21,19 @@ runs:
     uses: autero1/action-terragrunt@v1.1.0
     with:
       terragrunt_version: ${{ inputs.terragrunt_version }}
+
+  - name: terragrunt init
+    id: init
+    run: |
+           terragrunt init
+    working-directory: ${{ inputs.terragrunt_path }}
+  - name: terragrunt validate
+    id: validate
+    run: |
+           terragrunt validate
+    working-directory: ${{ inputs.terragrunt_path }}      
+  - name: terragrunt plan
+    id: plan
+    run: |
+           terragrunt plan
+    working-directory: ${{ inputs.terragrunt_path }}
