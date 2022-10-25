@@ -41,13 +41,7 @@ jobs:
     #runs-on: [ doliveiraorg-k8s-runner ]
     runs-on: [ubuntu-latest]
     name: plan
-    steps:
-    - uses: actions/checkout@v2
-    - name: terraform setup
-      uses: doliveiraorg/custom-workflows/.github/actions/terraform@main
-      with:
-        terraform_version: ${{ inputs.terraform_version }}       
-        terragrunt_version: ${{ inputs.terragrunt_version }}               
+    steps:          
     - name: "Configure AWS Credentials"
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -61,23 +55,9 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         GH_USER: ${{ secrets.GH_USER }}
-    - name: terragrunt init
-      id: init
-      run: |
-             terragrunt init
-      working-directory: ${{ inputs.terragrunt_path }}
-    - name: terragrunt validate
-      id: validate
-      run: |
-             terragrunt validate
-      working-directory: ${{ inputs.terragrunt_path }}      
-    - name: terragrunt plan
-      id: plan
-      run: |
-             terragrunt plan
-      working-directory: ${{ inputs.terragrunt_path }}
-#    - name: terraform destroy
-#      id: destroy
-#      run: |
-#             terragrunt destroy
-#      working-directory: ${{ inputs.terragrunt_path }}
+    - uses: actions/checkout@v2
+    - name: terragrunt workflow
+      uses: doliveiraorg/custom-workflows/.github/actions/terraform@main
+      with:
+        terraform_version: ${{ inputs.terraform_version }}       
+        terragrunt_version: ${{ inputs.terragrunt_version }}
