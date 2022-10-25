@@ -57,7 +57,7 @@ jobs:
         GH_USER: ${{ secrets.GH_USER }}
     - uses: actions/checkout@v2
     - name: terragrunt action
-      uses: doliveiraorg/custom-workflows/.github/actions/terragruntm@main
+      uses: doliveiraorg/custom-workflows/.github/actions/terragrunt@main
       with:
         terraform_version: ${{ inputs.terraform_version }}
         terragrunt_version: ${{ inputs.terragrunt_version }}
