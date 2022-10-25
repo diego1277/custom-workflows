@@ -42,6 +42,6 @@ runs:
     id: plan
     run: |
            terragrunt plan -out=plan
-           cat plan
+           ls -1
     working-directory: ${{ inputs.terragrunt_path }}
     shell: bash
