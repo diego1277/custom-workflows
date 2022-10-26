@@ -49,8 +49,8 @@ runs:
            git config --local --remove-section http."https://github.com/"
            git config --global url."https://${GH_USER}:${GH_TOKEN}@github.com/doliveiraorg".insteadOf "https://github.com/doliveiraorg"
     env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      GH_USER: ${{ secrets.GH_USER }}
+      GH_TOKEN: ${{ inputs.repo_terraform_gh_token }}
+      GH_USER: ${{ inputs.repo_terraform_gh_user }}
   
   - name: HashiCorp - Setup Terraform
     uses: hashicorp/setup-terraform@v2.0.2
