@@ -13,6 +13,10 @@ inputs:
     type: string
     required: true
     description: 'path terragrunt'
+  repo_gihub_token:
+    type: string
+    required: true
+    description: 'token github'
 
 runs:
   using: "composite"
@@ -45,7 +49,7 @@ runs:
     env:
       PLAN: "terragrunt\n${{ steps.plan.outputs.stdout }}"
     with:
-      github-token: ${{ secrets.GITHUB_TOKEN }}
+      github-token: ${{ inputs.repo_gihub_token }}
       script: |
         // 1. Retrieve existing bot comments for the PR
         const { data: comments } = await github.rest.issues.listComments({
