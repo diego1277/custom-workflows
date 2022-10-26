@@ -13,18 +13,6 @@ on:
         required: false
         description: 'versao do terragrunt'
         default: '0.39.2'        
-      aws_access_key_id:
-        type: string
-        required: false
-        description: 'aws key id'
-      aws_secret_access_key:
-        type: string
-        required: false
-        description: 'aws secret'
-      aws_region:
-        type: string
-        required: false
-        description: 'aws region'
       terragrunt_path:
         type: string
         required: true
@@ -45,3 +33,6 @@ jobs:
         terragrunt_path: ${{ inputs.terragrunt_path }}
         gh_token: ${{ secrets.GH_TOKEN }}
         gh_user: ${{ secrets.GH_USER }}
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        aws_region: ${{ secrets.AWS_REGION }}
