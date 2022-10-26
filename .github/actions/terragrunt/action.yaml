@@ -46,7 +46,7 @@ runs:
 
            terragrunt plan -out=$PWD/plan
            
-           terragrunt show -no-color plan  | grep "Plan: 2 to add, 0 to change, 0 to destroy." || TERRAGRUNT_APPLY=true
+           terragrunt show -no-color plan  | grep "Plan: 0 to add, 0 to change, 0 to destroy." || TERRAGRUNT_APPLY=true
            
            echo $TERRAGRUNT_APPLY
            
