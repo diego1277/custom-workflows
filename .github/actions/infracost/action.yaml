@@ -23,9 +23,6 @@ inputs:
     description: 'token do github'
     
     
-env:
-  TF_ROOT: ${{ inputs.terragrunt_path }}
-   
 runs:
   using: "composite"
   steps:
@@ -52,6 +49,9 @@ runs:
        infracost breakdown --path=${TF_ROOT} \
                           --format=json \
                           --out-file=/tmp/infracost-base.json
+     shell: bash
+     env:
+       TF_ROOT: ${{ inputs.terragrunt_path }}
     - name: Checkout PR branch
       uses: actions/checkout@v3
         
@@ -61,6 +61,9 @@ runs:
                         --format=json \
                         --compare-to=/tmp/infracost-base.json \
                         --out-file=/tmp/infracost.json
+      shell: bash
+      env:
+        TF_ROOT: ${{ inputs.terragrunt_path }}
     - name: Post Infracost comment
       run: |
           infracost comment github --path=/tmp/infracost.json \
@@ -68,3 +71,5 @@ runs:
                                    --github-token=${{inputs.token_github}} \
                                    --pull-request=${{github.event.pull_request.number}} \
                                    --behavior=update
+                                   
+      shell: bash
