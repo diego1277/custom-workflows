@@ -24,11 +24,7 @@ inputs:
   aws_region:
     type: string
     required: false
-    description: 'aws region'
-  terragrunt_path:
-    type: string
-    required: true
-    description: 'path terragrunt'        
+    description: 'aws region'    
   repo_terraform_gh_token:
     type: string
     required: true
