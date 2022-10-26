@@ -36,12 +36,14 @@ runs:
     shell: bash
   - name: Terragrunt validate
     id: validate
-    run: terragrunt validate -no-color
+    run: terragrunt validate 
+    #-no-color
     working-directory: ${{ inputs.terragrunt_path }}
     shell: bash
   - name: Terragrunt plan
     id: plan
-    run: terragrunt plan -no-color 
+    run: terragrunt plan 
+    #-no-color 
     working-directory: ${{ inputs.terragrunt_path }}
     shell: bash
   - name: Terragrunt plan pull request 
