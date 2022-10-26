@@ -62,4 +62,4 @@ jobs:
         terraform_version: ${{ inputs.terraform_version }}
         terragrunt_version: ${{ inputs.terragrunt_version }}
         terragrunt_path: ${{ inputs.terragrunt_path }}
-        gihub-token: ${{ secrets.GITHUB_TOKEN}}
+        repo_gihub_token: ${{ secrets.GITHUB_TOKEN}}
