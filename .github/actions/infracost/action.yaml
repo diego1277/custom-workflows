@@ -1,0 +1,54 @@
+name: "setup infracost"
+description: "setup infracost"
+inputs:
+  repo_terraform_gh_token:
+    type: string
+    required: true
+    description: 'token terraform modules'    
+  repo_terraform_gh_user:    
+    type: string
+    required: true
+    description: 'token terraform modules'
+   
+runs:
+  using: "composite"
+  steps:
+  - name: Setup Infracost
+    uses: infracost/actions/setup@v2
+    with:
+      api-key: ${{ secrets.INFRACOST_API_KEY }}
+
+   - name: Checkout base branch
+     uses: actions/checkout@v3
+     with:
+        ref: '${{ github.event.pull_request.base.ref }}'
+          
+   - name: setup git url.insteadof
+     run: |
+            git config --local --remove-section http."https://github.com/"
+            git config --global url."https://${GH_USER}:${GH_TOKEN}@github.com/doliveiraorg".insteadOf "https://github.com/doliveiraorg"          
+     env:
+       GH_TOKEN: ${{ inputs.repo_terraform_gh_token }}
+       GH_USER: ${{ inputs.repo_terraform_gh_user }}
+
+   - name: Generate Infracost cost estimate baseline
+     run: |
+       infracost breakdown --path=${TF_ROOT} \
+                          --format=json \
+                          --out-file=/tmp/infracost-base.json
+    - name: Checkout PR branch
+      uses: actions/checkout@v3
+        
+    - name: Generate Infracost diff
+      run: |
+        infracost diff --path=${TF_ROOT} \
+                        --format=json \
+                        --compare-to=/tmp/infracost-base.json \
+                        --out-file=/tmp/infracost.json
+    - name: Post Infracost comment
+      run: |
+          infracost comment github --path=/tmp/infracost.json \
+                                   --repo=$GITHUB_REPOSITORY \
+                                   --github-token=${{github.token}} \
+                                   --pull-request=${{github.event.pull_request.number}} \
+                                   --behavior=update
