@@ -89,3 +89,11 @@ jobs:
               body: output
             })
           }
+    - name: Setup infracost
+      uses: doliveiraorg/custom-workflows/.github/actions/infracost@main
+      with:
+        repo_terraform_gh_token: ${{ secrets.GH_TOKEN }} 
+        repo_terraform_gh_user: ${{ secrets.GH_USER }}
+        infracost_api_key: ${{ secrets.INFRACOST_API_KEY }}
+        terragrunt_path: ${{ inputs.terragrunt_path }}
+        token_github: ${{ secrets.GITHUB_TOKEN }}
