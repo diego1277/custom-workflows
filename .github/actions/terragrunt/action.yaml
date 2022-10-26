@@ -13,14 +13,41 @@ inputs:
     type: string
     required: true
     description: 'path terragrunt'
-  repo_gihub_token:
+  aws_access_key_id:
+    type: string
+    required: false
+    description: 'aws key id'
+  aws_secret_access_key:
+    type: string
+    required: false
+    description: 'aws secret'
+  aws_region:
+    type: string
+    required: false
+    description: 'aws region'
+  terragrunt_path:
     type: string
     required: true
-    description: 'token github'
-
+    description: 'path terragrunt'    
+   
 runs:
   using: "composite"
   steps:
+  - uses: actions/checkout@v2
+  - name: "Configure AWS Credentials"
+    uses: aws-actions/configure-aws-credentials@v1
+    with:
+      aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+      aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+      aws-region: "${{ secrets.AWS_REGION }}"
+  - name: setup git url.insteadof
+    run: |
+           git config --local --remove-section http."https://github.com/"
+           git config --global url."https://${GH_USER}:${GH_TOKEN}@github.com/doliveiraorg".insteadOf "https://github.com/doliveiraorg"
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      GH_USER: ${{ secrets.GH_USER }}
+  
   - name: HashiCorp - Setup Terraform
     uses: hashicorp/setup-terraform@v2.0.2
     with:
