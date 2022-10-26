@@ -41,7 +41,10 @@ runs:
   - name: terragrunt plan
     id: plan
     run: |
-           terragrunt plan -out=plan
-           ls -1
+
+           terragrunt plan -out=$PWD/plan
+           
+           terragrunt show -no-color plan  | grep "Plan: 0 to add, 0 to change, 0 to destroy."
+           
     working-directory: ${{ inputs.terragrunt_path }}
     shell: bash
