@@ -53,9 +53,8 @@ runs:
            sleep 120
     working-directory: ${{ inputs.terragrunt_path }}
     shell: bash
-
- - name: terragrunt apply
-    id: plan
+  - name: terragrunt apply
+    id: apply
     run: |
             terragrunt apply -auto-approve 
  
