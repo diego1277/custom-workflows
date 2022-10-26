@@ -13,13 +13,18 @@ inputs:
     type: string
     required: true
     description: 'token infracost api'
-  infracost_api_key:    
+  terragrunt_path:
     type: string
     required: true
-    description: 'token infracost api'
+    description: 'path terragrunt'
+  token_github:
+    type: string
+    required: true
+    description: 'token do github'
+    
     
 env:
-  TF_ROOT: 'prod/global/s3/projetoA/'
+  TF_ROOT: ${{ inputs.terragrunt_path }}
    
 runs:
   using: "composite"
@@ -60,6 +65,6 @@ runs:
       run: |
           infracost comment github --path=/tmp/infracost.json \
                                    --repo=$GITHUB_REPOSITORY \
-                                   --github-token=${{github.token}} \
+                                   --github-token=${{inputs.token_github}} \
                                    --pull-request=${{github.event.pull_request.number}} \
                                    --behavior=update
