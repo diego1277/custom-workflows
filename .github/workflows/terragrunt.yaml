@@ -29,11 +29,6 @@ on:
         type: string
         required: true
         description: 'path terragrunt'
-      terragrunt_destroy:
-        type: boolean
-        required: false
-        default: false
-        description: 'habilitar terragrunt destroy'
       
         
 jobs:
@@ -42,24 +37,11 @@ jobs:
     runs-on: [ubuntu-latest]
     name: plan
     steps:
-    - uses: actions/checkout@v2
-    - name: "Configure AWS Credentials"
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-        aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-        aws-region: "${{ secrets.AWS_REGION }}"
-    - name: setup git url.insteadof
-      run: |
-             git config --local --remove-section http."https://github.com/"
-             git config --global url."https://${GH_USER}:${GH_TOKEN}@github.com/doliveiraorg".insteadOf "https://github.com/doliveiraorg"
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        GH_USER: ${{ secrets.GH_USER }}
     - name: terragrunt action
       uses: doliveiraorg/custom-workflows/.github/actions/terragrunt@main
       with:
         terraform_version: ${{ inputs.terraform_version }}
         terragrunt_version: ${{ inputs.terragrunt_version }}
         terragrunt_path: ${{ inputs.terragrunt_path }}
-        repo_gihub_token: ${{ secrets.GITHUB_TOKEN}}
+        gh_token: ${{ secrets.GH_TOKEN }}
+        gh_user: ${{ secrets.GH_USER }}
