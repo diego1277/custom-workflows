@@ -9,6 +9,17 @@ inputs:
     type: string
     required: true
     description: 'token terraform modules'
+  infracost_api_key:    
+    type: string
+    required: true
+    description: 'token infracost api'
+  infracost_api_key:    
+    type: string
+    required: true
+    description: 'token infracost api'
+    
+env:
+  TF_ROOT: 'prod/global/s3/projetoA/'
    
 runs:
   using: "composite"
@@ -16,7 +27,7 @@ runs:
   - name: Setup Infracost
     uses: infracost/actions/setup@v2
     with:
-      api-key: ${{ secrets.INFRACOST_API_KEY }}
+      api-key: ${{ inputs.INFRACOST_API_KEY }}
 
    - name: Checkout base branch
      uses: actions/checkout@v3
