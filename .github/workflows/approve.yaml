@@ -6,7 +6,8 @@ on:
       environment:
         type: string
         description: 'Environment para deploy'
-        required: true
+        required: false
+        default: 'hom'
       deploy_approvers:
         type: string
         description: 'aprovadores'
