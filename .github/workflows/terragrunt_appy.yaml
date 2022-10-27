@@ -19,8 +19,12 @@ on:
         description: 'path terragrunt'
         
 jobs:
+  approve:
+    uses: doliveiraorg/custom-workflows/.github/workflows/approve.yaml@main
+
   apply:
     runs-on: [ubuntu-latest]
+    needs: [approve]
     name: apply
     steps:
     - name: Setup terragrunt
