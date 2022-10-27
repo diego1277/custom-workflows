@@ -39,7 +39,9 @@ runs:
   - name: setup git url.insteadof
     run: |
            git config --local --remove-section http."https://github.com/"
-           git config --global url."https://${GH_USER}:${GH_TOKEN}@github.com/doliveiraorg".insteadOf "https://github.com/doliveiraorg"          
+           git config --global url."https://${GH_USER}:${GH_TOKEN}@github.com/doliveiraorg".insteadOf "https://github.com/doliveiraorg" 
+           
+    shell: bash 
     env:
       GH_TOKEN: ${{ inputs.repo_terraform_gh_token }}
       GH_USER: ${{ inputs.repo_terraform_gh_user }}
