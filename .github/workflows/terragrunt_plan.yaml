@@ -21,7 +21,6 @@ on:
         
 jobs:
   plan:
-    #runs-on: [ doliveiraorg-k8s-runner ]
     runs-on: [ubuntu-latest]
     name: plan
     steps:
