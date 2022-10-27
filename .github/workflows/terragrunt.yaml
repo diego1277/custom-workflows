@@ -1,4 +1,4 @@
-name: Terraform
+name: Terragrunt Plan
 
 on:
   workflow_call:
