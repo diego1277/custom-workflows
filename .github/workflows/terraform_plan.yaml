@@ -17,6 +17,10 @@ on:
         type: string
         required: true
         description: 'path terragrunt / terragrunt'
+      terragrunt_deploy:
+        type: boolean
+        required: false
+        description: 'definir se sera realizado deploy terragrunt'  
       
         
 jobs:
@@ -35,11 +39,20 @@ jobs:
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
         aws_region: ${{ secrets.AWS_REGION }}
+        terragrunt_deploy: ${{ inputs.terragrunt_deploy }}
     - name: Terraform plan
       id: plan
-      run: terragrunt plan -no-color 
+      run: |
+             if [ "$TERRAGRUNT_DEPLOY" == "true" ]
+             then
+                  terragrunt plan -no-color
+             else
+                  terraform plan -no-color
+             fi    
       working-directory: ${{ inputs.terraform_path }}
       shell: bash
+      env:
+        TERRAGRUNT_DEPLOY: ${{ inputs.terragrunt_deploy }}
     - name: Terraform plan pull request 
       uses: actions/github-script@v6
       env:
