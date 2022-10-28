@@ -13,7 +13,7 @@ inputs:
     type: string
     required: true
     description: 'token infracost api'
-  terragrunt_path:
+  terraform_path:
     type: string
     required: true
     description: 'path terragrunt'
@@ -53,7 +53,7 @@ runs:
                            --out-file=/tmp/infracost-base.json
     shell: bash
     env:
-      TF_ROOT: ${{ inputs.terragrunt_path }}
+      TF_ROOT: ${{ inputs.terraform_path }}
   - name: Checkout PR branch
     uses: actions/checkout@v3
         
@@ -65,7 +65,7 @@ runs:
                                --out-file=/tmp/infracost.json
     shell: bash
     env:
-      TF_ROOT: ${{ inputs.terragrunt_path }}
+      TF_ROOT: ${{ inputs.terraform_path }}
   - name: Post Infracost comment
     run: |
             infracost comment github --path=/tmp/infracost.json \
