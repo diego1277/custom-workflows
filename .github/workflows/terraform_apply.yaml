@@ -13,10 +13,14 @@ on:
         required: false
         description: 'versao do terragrunt'
         default: '0.39.2'        
-      terragrunt_path:
+      terraform_path:
         type: string
         required: true
-        description: 'path terragrunt'
+        description: 'path terraform / terragrunt'
+      terragrunt_deploy:
+        type: boolean
+        required: false
+        description: 'definir se sera realizado deploy terragrunt'  
         
 jobs:
   approve:
@@ -27,20 +31,28 @@ jobs:
     needs: [approve]
     name: apply
     steps:
-    - name: Setup terragrunt
+    - name: Setup terraform
       uses: doliveiraorg/custom-workflows/.github/actions/terragrunt@main
       with:
         terraform_version: ${{ inputs.terraform_version }}
         terragrunt_version: ${{ inputs.terragrunt_version }}
-        terragrunt_path: ${{ inputs.terragrunt_path }}
+        terraform_path: ${{ inputs.terragrunt_path }}
+        terragrunt_deploy: ${{ inputs.terragrunt_deploy }}
         repo_terraform_gh_token: ${{ secrets.GH_TOKEN }}
         repo_terraform_gh_user: ${{ secrets.GH_USER }}
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
         aws_region: ${{ secrets.AWS_REGION }}
-    - name: Terragrunt apply
+    - name: Terraform apply
       id: apply
-      run: echo "terragrunt apply -auto-approve" 
-      #terragrunt apply -auto-approve
+      run: | 
+             if [ "$TERRAGRUNT_DEPLOY" == "true" ]
+             then
+                  echo "terragrunt apply -auto-approve"
+             else
+                  echo "terraform apply -auto-approve"
+             fi    
       working-directory: ${{ inputs.terragrunt_path }}
       shell: bash
+      env:
+        TERRAGRUNT_DEPLOY: ${{ inputs.terragrunt_deploy }}
