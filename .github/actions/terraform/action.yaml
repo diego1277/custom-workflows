@@ -9,10 +9,10 @@ inputs:
     required: false
     description: 'versao do terragrunt'
     default: '0.39.2'
-  terragrunt_path:
+  terraform_path:
     type: string
     required: true
-    description: 'path terragrunt'
+    description: 'path terraform / terragrunt'
   aws_access_key_id:
     type: string
     required: false
@@ -65,10 +65,10 @@ runs:
   - name: Terragrunt init
     id: init
     run: terragrunt init
-    working-directory: ${{ inputs.terragrunt_path }}
+    working-directory: ${{ inputs.terraform_path }}
     shell: bash
   - name: Terragrunt validate
     id: validate
     run: terragrunt validate -no-color
-    working-directory: ${{ inputs.terragrunt_path }}
+    working-directory: ${{ inputs.terraform_path }}
     shell: bash
