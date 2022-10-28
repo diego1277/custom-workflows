@@ -13,10 +13,10 @@ on:
         required: false
         description: 'versao do terragrunt'
         default: '0.39.2'        
-      terragrunt_path:
+      terraform_path:
         type: string
         required: true
-        description: 'path terragrunt'
+        description: 'path terragrunt / terragrunt'
       
         
 jobs:
@@ -29,7 +29,7 @@ jobs:
       with:
         terraform_version: ${{ inputs.terraform_version }}
         terragrunt_version: ${{ inputs.terragrunt_version }}
-        terragrunt_path: ${{ inputs.terragrunt_path }}
+        terraform_path: ${{ inputs.terraform_path }}
         repo_terraform_gh_token: ${{ secrets.GH_TOKEN }}
         repo_terraform_gh_user: ${{ secrets.GH_USER }}
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -38,12 +38,12 @@ jobs:
     - name: Terragrunt plan
       id: plan
       run: terragrunt plan -no-color 
-      working-directory: ${{ inputs.terragrunt_path }}
+      working-directory: ${{ inputs.terraform_path }}
       shell: bash
-    - name: Terragrunt plan pull request 
+    - name: Terraform plan pull request 
       uses: actions/github-script@v6
       env:
-        PLAN: "terragrunt\n${{ steps.plan.outputs.stdout }}"
+        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
@@ -94,5 +94,5 @@ jobs:
         repo_terraform_gh_token: ${{ secrets.GH_TOKEN }} 
         repo_terraform_gh_user: ${{ secrets.GH_USER }}
         infracost_api_key: ${{ secrets.INFRACOST_API_KEY }}
-        terragrunt_path: ${{ inputs.terragrunt_path }}
+        terraform_path: ${{ inputs.terraform_path }}
         token_github: ${{ secrets.GITHUB_TOKEN }}
