@@ -13,6 +13,10 @@ inputs:
     type: string
     required: true
     description: 'path terraform / terragrunt'
+  terragrunt_deploy:
+    type: boolean
+    required: false
+    description: 'definir se sera realizado deploy terragrunt'    
   aws_access_key_id:
     type: string
     required: false
@@ -32,7 +36,7 @@ inputs:
   repo_terraform_gh_user:    
     type: string
     required: true
-    description: 'token terraform modules'    
+    description: 'token terraform modules' 
    
 runs:
   using: "composite"
@@ -62,13 +66,29 @@ runs:
     uses: autero1/action-terragrunt@v1.1.0
     with:
       terragrunt_version: ${{ inputs.terragrunt_version }}
-  - name: Terragrunt init
+  - name: Terraform init
     id: init
-    run: terragrunt init
+    run: |
+           if [ "$TERRAGRUNT_DEPLOY" == "true" ]
+           then
+                 terragrunt init
+           else
+                 terraform init
+           fi       
     working-directory: ${{ inputs.terraform_path }}
     shell: bash
-  - name: Terragrunt validate
+    env:
+      TERRAGRUNT_DEPLOY: ${{ inputs.terragrunt_deploy }}
+  - name: Terraform validate
     id: validate
-    run: terragrunt validate -no-color
+    run: |
+           if [ "$TERRAGRUNT_DEPLOY" == "true" ]
+           then
+                 terragrunt validate -no-color
+           else
+                 terraform validate -no-color
+           fi
     working-directory: ${{ inputs.terraform_path }}
     shell: bash
+    env:
+      TERRAGRUNT_DEPLOY: ${{ inputs.terragrunt_deploy }}
