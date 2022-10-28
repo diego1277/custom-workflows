@@ -24,7 +24,7 @@ jobs:
     runs-on: [ubuntu-latest]
     name: plan
     steps:
-    - name: Setup terragrunt
+    - name: Setup terraform
       uses: doliveiraorg/custom-workflows/.github/actions/terragrunt@main
       with:
         terraform_version: ${{ inputs.terraform_version }}
@@ -35,7 +35,7 @@ jobs:
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
         aws_region: ${{ secrets.AWS_REGION }}
-    - name: Terragrunt plan
+    - name: Terraform plan
       id: plan
       run: terragrunt plan -no-color 
       working-directory: ${{ inputs.terraform_path }}
