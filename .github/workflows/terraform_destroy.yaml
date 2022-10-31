@@ -1,0 +1,58 @@
+name: Terraform destroy
+
+on:
+  workflow_call:
+    inputs:
+      terraform_version:
+        type: string
+        description: 'versao do terraform'
+        default: 1.3.3
+        required: false
+      terragrunt_version:
+        type: string
+        required: false
+        description: 'versao do terragrunt'
+        default: '0.39.2'        
+      terraform_path:
+        type: string
+        required: true
+        description: 'path terraform / terragrunt'
+      terragrunt_deploy:
+        type: boolean
+        required: false
+        description: 'definir se sera realizado deploy terragrunt'  
+        
+jobs:
+  approve:
+    uses: doliveiraorg/custom-workflows/.github/workflows/approve.yaml@main
+
+  destroy:
+    runs-on: [ubuntu-latest]
+    needs: [approve]
+    name: destroy
+    steps:
+    - name: Setup terraform
+      uses: doliveiraorg/custom-workflows/.github/actions/terraform@main
+      with:
+        terraform_version: ${{ inputs.terraform_version }}
+        terragrunt_version: ${{ inputs.terragrunt_version }}
+        terraform_path: ${{ inputs.terragrunt_path }}
+        terragrunt_deploy: ${{ inputs.terragrunt_deploy }}
+        repo_terraform_gh_token: ${{ secrets.GH_TOKEN }}
+        repo_terraform_gh_user: ${{ secrets.GH_USER }}
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        aws_region: ${{ secrets.AWS_REGION }}
+    - name: Terraform destroy
+      id: destroy
+      run: | 
+             if [ "$TERRAGRUNT_DEPLOY" == "true" ]
+             then
+                  echo "terragrunt destroy -auto-approve"
+             else
+                  echo "terraform destroy -auto-approve"
+             fi    
+      working-directory: ${{ inputs.terraform_path }}
+      shell: bash
+      env:
+        TERRAGRUNT_DEPLOY: ${{ inputs.terragrunt_deploy }}
