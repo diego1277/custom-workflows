@@ -52,7 +52,7 @@ jobs:
              else
                   echo "terraform apply -auto-approve"
              fi    
-      working-directory: ${{ inputs.terragrunt_path }}
+      working-directory: ${{ inputs.terraform_path }}
       shell: bash
       env:
         TERRAGRUNT_DEPLOY: ${{ inputs.terragrunt_deploy }}
