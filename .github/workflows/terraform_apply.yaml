@@ -48,9 +48,9 @@ jobs:
       run: | 
              if [ "$TERRAGRUNT_DEPLOY" == "true" ]
              then
-                  echo "terragrunt apply -auto-approve"
+                  terragrunt apply -auto-approve
              else
-                  echo "terraform apply -auto-approve"
+                  terraform apply -auto-approve
              fi    
       working-directory: ${{ inputs.terraform_path }}
       shell: bash
