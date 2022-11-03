@@ -36,7 +36,7 @@ jobs:
       with:
         terraform_version: ${{ inputs.terraform_version }}
         terragrunt_version: ${{ inputs.terragrunt_version }}
-        terraform_path: ${{ inputs.terragrunt_path }}
+        terraform_path: ${{ inputs.terraform_path }}
         terragrunt_deploy: ${{ inputs.terragrunt_deploy }}
         repo_terraform_gh_token: ${{ secrets.GH_TOKEN }}
         repo_terraform_gh_user: ${{ secrets.GH_USER }}
