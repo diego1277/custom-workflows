@@ -58,21 +58,3 @@ jobs:
              fi
 
              echo "helmfile_deploy=$HELMFILE_DEPLOY" > $GITHUB_OUTPUT
-          
-  approve:
-    uses: doliveiraorg/custom-workflows/.github/workflows/approve.yaml@main
-    if: needs.diff.outputs.helmfile_deploy == 'true'
-    needs: [diff]
-    with:
-      environment: ${{ inputs.environment }}
-             
-  deploy:
-    runs-on: [ doliveiraorg-k8s-runner ]
-    name: deploy ${{ inputs.environment }}
-    needs: [approve]
-    steps:
-    - name: helmfile setup
-      uses: doliveiraorg/custom-workflows/.github/actions/helmfile@main    
-    - name: helmfile deploy ${{ inputs.environment }}
-      run: |
-             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
