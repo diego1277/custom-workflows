@@ -60,7 +60,7 @@ jobs:
              echo "helmfile_deploy=$HELMFILE_DEPLOY" > $GITHUB_OUTPUT
   approve:
     uses: doliveiraorg/custom-workflows/.github/workflows/approve.yaml@main
-    name: approve ${{ inputs.
+    name: approve ${{ inputs.environment }}
     if: needs.diff.outputs.helmfile_deploy == 'true'
     needs: [diff]
     with:
