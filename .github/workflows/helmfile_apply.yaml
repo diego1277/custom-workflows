@@ -1,0 +1,41 @@
+
+name: CD
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: 'Environment para deploy'
+        required: true
+      repository:
+        type: string
+        description: 'Repositorio da imagem'
+        required: true   
+      tag:
+        type: string
+        description: 'Tag da imagem'
+        required: true 
+      helm_version:
+        type: string
+        description: 'versao do helm'
+        required: false
+        default: '3.7.0'
+      helmfile_path:
+        type: string
+        description: 'Caminho para o helmfile'
+        required: false
+        default: '.' 
+        
+jobs:
+  diff:
+    runs-on: [ doliveiraorg-k8s-runner ]
+    name: apply ${{ inputs.environment }}
+    steps:
+    - name: helmfile setup
+      uses: doliveiraorg/custom-workflows/.github/actions/helmfile@main
+    - name: helmfile apply
+      id: helmfile_apply
+      run: |
+             helmfile --environment ${{ inputs.environment }} --file ${{ inputs.helmfile_path }}/helmfile.yaml apply --set image.repository=${{ inputs.repository }},image.tag=${{ inputs.tag }} 
+            
