@@ -40,7 +40,7 @@ on:
 jobs:
   diff:
     runs-on: [ doliveiraorg-k8s-runner ]
-    name: diff ${{ inputs.environment }}
+    name: ${{ inputs.environment }}
     outputs:
       helmfile_deploy: ${{ steps.helmfile_diff.outputs.helmfile_deploy }}
     steps:
