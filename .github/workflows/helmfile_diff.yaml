@@ -58,13 +58,3 @@ jobs:
              fi
 
              echo "helmfile_deploy=$HELMFILE_DEPLOY" > $GITHUB_OUTPUT
-
-
-    - uses: gr2m/create-or-update-pull-request-action@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        branch: "feature"
-        author: "Lorem J. Ipsum <lorem@example.com>"
-        path: "data/"
-        commit-message: "feat: data updated"
