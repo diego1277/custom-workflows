@@ -60,7 +60,7 @@ jobs:
         TERRAGRUNT_DEPLOY: ${{ inputs.terragrunt_deploy }}
     - name: Terraform plan pull request 
       uses: actions/github-script@v6
-      if: ${{ inputs.deploy_on_pull_request }} == 'true'
+      if: ${{ inputs.deploy_on_pull_request }} == true
       env:
         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
       with:
