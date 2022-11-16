@@ -1,0 +1,23 @@
+name: teste
+
+on:
+  workflow_call:
+    inputs:
+      deploy_on_pull_request:
+        type: boolean
+        required: false
+        default: true
+        description: 'deploy apenas realizado apenas em pull request'        
+      
+        
+jobs:
+  plan:
+    runs-on: [ubuntu-latest]
+    name: plan
+    steps:
+    - name: step1
+      run: |
+             echo ${{ inputs.deploy_on_pull_request }}
+    - name: step2
+      run: |
+             echo ${{ inputs.deploy_on_pull_request }}
