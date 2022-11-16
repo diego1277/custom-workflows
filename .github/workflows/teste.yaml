@@ -14,9 +14,11 @@ jobs:
   plan:
     runs-on: [ubuntu-latest]
     name: plan
+    env:
+      dnp: ${{ inputs.deploy_on_pull_request }}
     steps:
     - name: step1
-      if: ${{ inputs.deploy_on_pull_request }} == false
+      if: env.dnp == false
       run: |
              echo ${{ inputs.deploy_on_pull_request }}
     - name: step2
