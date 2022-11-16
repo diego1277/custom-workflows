@@ -25,6 +25,7 @@ on:
 jobs:
   plan:
     uses: doliveiraorg/custom-workflows/.github/workflows/terraform_plan.yaml@main
+    secrets: inherit
     with:
       terraform_path: ${{ inputs.terraform_path }}
       terragrunt_deploy: ${{ inputs.terragrunt_deploy }}
