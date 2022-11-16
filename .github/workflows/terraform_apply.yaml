@@ -23,7 +23,14 @@ on:
         description: 'definir se sera realizado deploy terragrunt'  
         
 jobs:
+  plan:
+    uses: doliveiraorg/custom-workflows/.github/workflows/terraform_plan.yaml@main
+    with:
+      terraform_path: ${{ inputs.terraform_path }}
+      terragrunt_deploy: ${{ inputs.terragrunt_deploy }}
+
   approve:
+    needs: [plan]
     uses: doliveiraorg/custom-workflows/.github/workflows/approve.yaml@main
 
   apply:
