@@ -20,7 +20,12 @@ on:
       terragrunt_deploy:
         type: boolean
         required: false
-        description: 'definir se sera realizado deploy terragrunt'  
+        description: 'definir se sera realizado deploy terragrunt'
+      deploy_on_pull_request:
+        type: boolean
+        required: false
+        default: true
+        description: 'deploy apenas realizado apenas em pull request'        
       
         
 jobs:
@@ -55,6 +60,7 @@ jobs:
         TERRAGRUNT_DEPLOY: ${{ inputs.terragrunt_deploy }}
     - name: Terraform plan pull request 
       uses: actions/github-script@v6
+      if: ${{ inputs.deploy_on_pull_request }} == 'true'
       env:
         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
       with:
@@ -103,6 +109,7 @@ jobs:
           }
     - name: Setup infracost
       uses: doliveiraorg/custom-workflows/.github/actions/infracost@main
+      if: ${{ inputs.deploy_on_pull_request }} == 'true'
       with:
         repo_terraform_gh_token: ${{ secrets.GH_TOKEN }} 
         repo_terraform_gh_user: ${{ secrets.GH_USER }}
