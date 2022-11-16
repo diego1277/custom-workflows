@@ -16,7 +16,7 @@ jobs:
     name: plan
     steps:
     - name: step1
-      if: ${{ inputs.deploy_on_pull_request }} == 'false'
+      if: ${{ inputs.deploy_on_pull_request }} == false
       run: |
              echo ${{ inputs.deploy_on_pull_request }}
     - name: step2
