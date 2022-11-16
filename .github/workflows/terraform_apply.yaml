@@ -29,6 +29,7 @@ jobs:
     with:
       terraform_path: ${{ inputs.terraform_path }}
       terragrunt_deploy: ${{ inputs.terragrunt_deploy }}
+      deploy_on_pull_request: false
 
   approve:
     needs: [plan]
