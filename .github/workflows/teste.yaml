@@ -6,7 +6,7 @@ on:
       deploy_on_pull_request:
         type: boolean
         required: false
-        default: true
+        default: false
         description: 'deploy apenas realizado apenas em pull request'        
       
         
