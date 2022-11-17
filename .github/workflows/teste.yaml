@@ -18,7 +18,7 @@ jobs:
       dnp: ${{ inputs.deploy_on_pull_request }}
     steps:
     - name: step1
-      if: env.dnp == 'false'
+      if: inputs.deploy_on_pull_request == 'false'
       run: |
              echo ${{ inputs.deploy_on_pull_request }}
     - name: step2
