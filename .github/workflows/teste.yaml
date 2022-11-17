@@ -8,17 +8,16 @@ on:
         required: false
         default: false
         description: 'deploy apenas realizado apenas em pull request'        
-      
+env:
+  dnr: ${{ inputs.deploy_on_pull_request }}
         
 jobs:
   plan:
     runs-on: [ubuntu-latest]
     name: plan
-    env:
-      dnp: ${{ inputs.deploy_on_pull_request }}
     steps:
     - name: step1
-      if: inputs.deploy_on_pull_request == 'false'
+      if: env.dnr == 'false'
       run: |
              echo ${{ inputs.deploy_on_pull_request }}
     - name: step2
