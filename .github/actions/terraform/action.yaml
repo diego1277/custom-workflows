@@ -9,6 +9,10 @@ inputs:
     required: false
     description: 'versao do terragrunt'
     default: '0.39.2'
+  terraform_wrapper:
+    required: false
+    description: 'terraform wrapper'
+    default: false    
   terraform_path:
     type: string
     required: true
@@ -62,6 +66,7 @@ runs:
     uses: hashicorp/setup-terraform@v2.0.2
     with:
       terraform_version: ${{ inputs.terraform_version }}
+      terraform_wrapper: ${{ inputs.terraform_wrapper }}
   - name: Setup Terragrunt
     uses: autero1/action-terragrunt@v1.1.0
     with:
