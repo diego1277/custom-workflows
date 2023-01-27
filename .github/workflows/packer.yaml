@@ -57,3 +57,4 @@ jobs:
                     }
             }'    
       
+#https://developer.hashicorp.com/packer/docs/commands/init
