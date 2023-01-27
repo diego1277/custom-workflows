@@ -34,6 +34,7 @@ jobs:
              curl -LO https://releases.hashicorp.com/packer/${{ inputs.packer_version }}/packer_${{ inputs.packer_version }}_linux_amd64.zip
              unzip -o packer_${{ inputs.packer_version }}_linux_amd64.zip
              mv packer /usr/local/bin/
+      working-directory: "/tmp"
     - name: Packer init
       run: |
             packer init .
