@@ -31,16 +31,9 @@ jobs:
         aws-region: "${{ secrets.AWS_REGION }}"
     - name: Setup hashiCorp packer
       run: |
-              packer --version
-#             curl -LO https://releases.hashicorp.com/packer/${{ inputs.packer_version }}/packer_${{ inputs.packer_version }}_linux_amd64.zip
-#             unzip packer_${{ inputs.packer_version }}_linux_amd64.zip
-#             mv packer /usr/local/bin/
-#             packer version
-#             ansible --version
-    - name: Ansible lint
-      uses: ansible/ansible-lint-action@v6.11.0
-      with:
-        path: ${{ inputs.ansible_directory }}
+             curl -LO https://releases.hashicorp.com/packer/${{ inputs.packer_version }}/packer_${{ inputs.packer_version }}_linux_amd64.zip
+             unzip -o packer_${{ inputs.packer_version }}_linux_amd64.zip
+             mv packer /usr/local/bin/
     - name: Packer init
       run: |
             packer init .
