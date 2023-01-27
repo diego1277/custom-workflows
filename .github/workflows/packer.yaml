@@ -29,22 +29,22 @@ jobs:
         aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
         aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
         aws-region: "${{ secrets.AWS_REGION }}"
-    - name: Ansible Lint
-      uses: ansible/ansible-lint-action@v6.11.0
-      with:
-        path: ${{ inputs.ansible_directory }}
-    - name: Setup HashiCorp Packer
+    - name: Setup hashiCorp packer
       run: |
               curl -LO https://releases.hashicorp.com/packer/${{ inputs.packer_version }}/packer_${{ inputs.packer_version }}_linux_amd64.zip
               unzip packer_${{ inputs.packer_version }}_linux_amd64.zip
               mv packer /usr/local/bin/
               packer version
               ansible --version
-    - name: packer init
+    - name: Ansible lint
+      uses: ansible/ansible-lint-action@v6.11.0
+      with:
+        path: ${{ inputs.ansible_directory }}
+    - name: Packer init
       run: |
             packer init .
       working-directory: "${{ inputs.packer_directory }}"
-    - name: packer validate
+    - name: Packer validate
       run: |
             packer validate .
       working-directory: "${{ inputs.packer_directory }}"
