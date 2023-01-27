@@ -1,4 +1,4 @@
-name: Packer build
+name: Packer
 
 on:
   workflow_call:
@@ -19,7 +19,7 @@ on:
         required: false       
         
 jobs:
-  packer:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
