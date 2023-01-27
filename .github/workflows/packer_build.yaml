@@ -21,7 +21,6 @@ on:
 jobs:
   packer:
     runs-on: ubuntu-latest
-    secrets: inherit 
     steps:
     - uses: actions/checkout@v2
     - name: "Configure AWS Credentials"
@@ -29,21 +28,7 @@ jobs:
       with:
         aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
         aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-        aws-region: "us-east-1"
-    - name: teste
-      run: |
-            curl --location --request POST 'https://api.github.com/repos/doliveiraorg/testes-github-actions/dispatches?Accept=application/vnd.github+json&Content-Type=application/json' \
-            --header 'webserver: nginx' \
-            --header 'Authorization: Basic ${{ secrets.TERRAFORM_REPO_TOKEN }}' \
-            --header 'Content-Type: text/plain' \
-            --data-raw '{
-                "event_type":"new-packer-image",
-                "client_payload":{
-                    "env":"homolog",
-                    "tag":"v0.0.1"
-                    }
-            }'    
-      
+        aws-region: "${{ secrets.AWS_REGION }}"
     - name: Ansible Lint
       uses: ansible/ansible-lint-action@v6.11.0
       with:
@@ -58,8 +43,22 @@ jobs:
     - name: packer init
       run: |
             packer init .
-      working-directory: ${{ inputs.packer_directory }}
+      working-directory: "${{ inputs.packer_directory }}"
     - name: packer validate
       run: |
             packer validate .
-      working-directory: ${{ inputs.packer_directory }}
+      working-directory: "${{ inputs.packer_directory }}"
+    - name: Trigger terraform workflow
+      run: |
+            curl --location --request POST 'https://api.github.com/repos/doliveiraorg/testes-github-actions/dispatches?Accept=application/vnd.github+json&Content-Type=application/json' \
+            --header 'webserver: nginx' \
+            --header 'Authorization: Basic ${{ secrets.TERRAFORM_REPO_TOKEN }}' \
+            --header 'Content-Type: text/plain' \
+            --data-raw '{
+                "event_type":"new-packer-image",
+                "client_payload":{
+                    "env":"homolog",
+                    "tag":"v0.0.1"
+                    }
+            }'    
+      
