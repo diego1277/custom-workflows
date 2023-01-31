@@ -29,20 +29,20 @@ jobs:
         aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
         aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
         aws-region: "${{ secrets.AWS_REGION }}"
-    - name: Setup hashiCorp packer
-      run: |
-             curl -LO https://releases.hashicorp.com/packer/${{ inputs.packer_version }}/packer_${{ inputs.packer_version }}_linux_amd64.zip
-             unzip -o packer_${{ inputs.packer_version }}_linux_amd64.zip
-             mv packer /usr/local/bin/
-      working-directory: "/tmp"
-    - name: Packer init
-      run: |
-            packer init .
-      working-directory: "${{ inputs.packer_directory }}"
-    - name: Packer validate
-      run: |
-            packer validate .
-      working-directory: "${{ inputs.packer_directory }}"
+#    - name: Setup hashiCorp packer
+#      run: |
+#             curl -LO https://releases.hashicorp.com/packer/${{ inputs.packer_version }}/packer_${{ inputs.packer_version }}_linux_amd64.zip
+#             unzip -o packer_${{ inputs.packer_version }}_linux_amd64.zip
+#             mv packer /usr/local/bin/
+#      working-directory: "/tmp"
+#    - name: Packer init
+#      run: |
+#            packer init .
+#      working-directory: "${{ inputs.packer_directory }}"
+#    - name: Packer validate
+#      run: |
+#            packer validate .
+#      working-directory: "${{ inputs.packer_directory }}"
     - name: Trigger terraform workflow
       run: |
             curl --location --request POST 'https://api.github.com/repos/doliveiraorg/testes-github-actions/dispatches?Accept=application/vnd.github+json&Content-Type=application/json' \
