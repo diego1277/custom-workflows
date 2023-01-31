@@ -7,7 +7,11 @@ on:
         type: string
         description: 'terraform repo'
         default: 'https://api.github.com/repos/doliveiraorg/testes-github-actions/dispatches'
-        required: false      
+        required: false
+      dispatches_event_type:
+        type: string
+        description: 'dispatches event type'
+        required: true           
       packer_directory:
         type: string
         description: 'packer directory'
@@ -56,6 +60,6 @@ jobs:
               -H "Authorization: Bearer ${{ secrets.TERRAFORM_REPO_TOKEN }}"\
               -H "X-GitHub-Api-Version: 2022-11-28" \
               ${{ inputs.dispatches_repo }} \
-              -d '{"event_type":"on-demand-test","client_payload":{"unit":false,"integration":true}}'
+              -d '{"event_type":"${{ inputs.dispatches_event_type }}","client_payload":{"unit":false,"integration":true}}'
       
 #https://developer.hashicorp.com/packer/docs/commands/init
