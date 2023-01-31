@@ -50,7 +50,7 @@ jobs:
             --header 'Authorization: Basic ${{ secrets.TERRAFORM_REPO_TOKEN }}' \
             --header 'Content-Type: text/plain' \
             --data-raw '{
-                "event_type":"new-packer-image",
+                "event_type":"terraform2",
                 "client_payload":{
                     "env":"homolog",
                     "tag":"v0.0.1"
