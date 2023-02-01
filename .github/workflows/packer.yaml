@@ -26,7 +26,7 @@ on:
         description: 'ansible directory'
         default: 'packer/'
         required: false       
-        
+   
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,12 +38,10 @@ jobs:
         aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
         aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
         aws-region: "${{ secrets.AWS_REGION }}"
-    - name: Setup hashiCorp packer
-      run: |
-             curl -LO https://releases.hashicorp.com/packer/${{ inputs.packer_version }}/packer_${{ inputs.packer_version }}_linux_amd64.zip
-             unzip -o packer_${{ inputs.packer_version }}_linux_amd64.zip
-             mv packer /usr/local/bin/
-      working-directory: "/tmp"
+    - name: Setup HashiCorp Packer
+      uses: hashicorp/setup-packer@v2.0.0
+      with:
+        version: "${{ inputs.packer_version }}"      
     - name: Packer init
       run: |
             packer init .
@@ -63,3 +61,4 @@ jobs:
               -d '{"event_type":"${{ inputs.dispatches_event_type }}","client_payload":{"unit":false,"integration":true}}'
       
 #https://developer.hashicorp.com/packer/docs/commands/init
+#curl -i https://api.github.com/users/octocat     
