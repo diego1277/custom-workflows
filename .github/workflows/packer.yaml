@@ -59,6 +59,11 @@ jobs:
               -H "X-GitHub-Api-Version: 2022-11-28" \
               ${{ inputs.dispatches_repo }} \
               -d '{"event_type":"${{ inputs.dispatches_event_type }}","client_payload":{"unit":false,"integration":true}}'
-      
+          
+            if [ $? != 0 ]
+            then
+                 echo "Error in githubactions dispatches trigger event"
+                 exit 1
+            fi
 #https://developer.hashicorp.com/packer/docs/commands/init
 #curl -i https://api.github.com/users/octocat     
