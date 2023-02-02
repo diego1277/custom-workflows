@@ -21,6 +21,10 @@ on:
         description: 'packer version'
         default: '1.8.5'
         required: false
+      packer_var_file:
+        type: string
+        description: 'packer var file'
+        required: true
       ansible_directory:
         type: string
         description: 'ansible directory'
@@ -48,7 +52,7 @@ jobs:
       working-directory: "${{ inputs.packer_directory }}"
     - name: Packer validate
       run: |
-            packer validate .
+            packer validate -var-file= .
       working-directory: "${{ inputs.packer_directory }}"
     - name: Trigger terraform workflow
       run: |
