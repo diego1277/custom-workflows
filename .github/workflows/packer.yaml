@@ -48,11 +48,11 @@ jobs:
         version: "${{ inputs.packer_version }}"      
     - name: Packer init
       run: |
-            packer init .
+            packer init -var-file=${{ inputs.packer_var_file }} .
       working-directory: "${{ inputs.packer_directory }}"
     - name: Packer validate
       run: |
-            packer validate -var-file= .
+            packer validate -var-file=${{ inputs.packer_var_file }} .
       working-directory: "${{ inputs.packer_directory }}"
     - name: Trigger terraform workflow
       run: |
