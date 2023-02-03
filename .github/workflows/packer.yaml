@@ -52,6 +52,9 @@ jobs:
     - name: Packer validate
       run: |
             packer validate -var-file=${{ inputs.packer_var_file }} ${{ inputs.packer_directory }}
+    - name: Packer build
+      run: |
+            packer build -var-file=${{ inputs.packer_var_file }} ${{ inputs.packer_directory }}            
     - name: Trigger terraform workflow
       run: |
             curl --fail \
