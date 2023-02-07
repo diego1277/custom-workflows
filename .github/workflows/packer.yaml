@@ -45,16 +45,20 @@ jobs:
     - name: Setup HashiCorp Packer
       uses: hashicorp/setup-packer@v2.0.0
       with:
-        version: "${{ inputs.packer_version }}"      
+        version: "${{ inputs.packer_version }}" 
+    - name: Set VERSION
+      run: |
+             echo "VERSION=$(date +%Y%m%d).${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+      
     - name: Packer init
       run: |
-            packer init -var-file=${{ inputs.packer_var_file }} ${{ inputs.packer_directory }} 
+            packer init -var-file=${{ inputs.packer_var_file }} -var "version=${VERSION}" ${{ inputs.packer_directory }} 
     - name: Packer validate
       run: |
-            packer validate -var-file=${{ inputs.packer_var_file }} ${{ inputs.packer_directory }}
+            packer validate -var-file=${{ inputs.packer_var_file }} -var "version=${VERSION}" ${{ inputs.packer_directory }}
     - name: Packer build
       run: |
-            packer build -var-file=${{ inputs.packer_var_file }} ${{ inputs.packer_directory }}            
+            packer build -var-file=${{ inputs.packer_var_file }} -var "version=${VERSION}" ${{ inputs.packer_directory }}            
     - name: Trigger terraform workflow
       run: |
             curl --fail \
