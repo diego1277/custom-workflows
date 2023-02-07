@@ -24,12 +24,7 @@ on:
       packer_var_file:
         type: string
         description: 'packer var file'
-        required: true
-      ansible_directory:
-        type: string
-        description: 'ansible directory'
-        default: 'packer/'
-        required: false       
+        required: true  
    
 jobs:
   build:
