@@ -53,8 +53,7 @@ jobs:
             packer validate -var-file=${{ inputs.packer_var_file }} -var "version=${VERSION}" ${{ inputs.packer_directory }}
     - name: Packer build
       run: |
-              echo "packer build"
-     #packer build -var-file=${{ inputs.packer_var_file }} -var "version=${VERSION}" ${{ inputs.packer_directory }}            
+            packer build -var-file=${{ inputs.packer_var_file }} -var "version=${VERSION}" ${{ inputs.packer_directory }}            
     - name: Trigger terraform workflow
       run: |
             curl --fail \
