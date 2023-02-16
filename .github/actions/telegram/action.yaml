@@ -1,1 +1,26 @@
  
+name: "telegram"
+description: "send telegram message"
+inputs:
+  token:
+    type: string
+    required: true
+    description: 'telegram token'    
+  chat_id:    
+    type: string
+    required: true
+    description: 'telegram chat id'
+  message:    
+    type: string
+    required: true
+    description: 'telegram message'
+ 
+runs:
+  using: "composite"
+  steps:          
+  - name: send telegram message
+    run: |
+          curl --silent -X POST \
+           --data-urlencode "chat_id=${{ inputs.chat_id }}" \
+           --data-urlencode "text=${{ inputs.message }}" "https://api.telegram.org/bot${{ inputs.token }}/sendMessage?disable_web_page_preview=true&parse_mode=html"
+         
