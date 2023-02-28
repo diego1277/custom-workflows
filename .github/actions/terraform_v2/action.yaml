@@ -40,7 +40,7 @@ runs:
 #      aws-access-key-id: "${{ inputs.aws_access_key_id }}"
 #      aws-secret-access-key: "${{ inputs.aws_secret_access_key }}"
 #      aws-region: "${{ inputs.aws_region }}"
-      role-to-assume: ${{ inputs.aws_role_arn }}
+      role-to-assume: "${{ inputs.aws_role_arn }}"
       role-session-name: terraformGithubActions
       aws-region: 'us-east-2'
   - name: HashiCorp - Setup Terraform
