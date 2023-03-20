@@ -20,7 +20,7 @@ runs:
             cat templates/hello.yaml | tee $POLARIS_CUSTOM_CHECKS
             echo "wait...."
             cat $POLARIS_CUSTOM_CHECKS
-            echo "plaris_config=$(echo $POLARIS_CUSTOM_CHECKS)" >> $GITHUB_OUTPUT
+            echo "plaris_config=$(echo "hello")" >> $GITHUB_OUTPUT
     shell: bash
     working-directory: ${{ github.action_path }}
            
