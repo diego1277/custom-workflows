@@ -12,6 +12,6 @@ runs:
   - uses: actions/checkout@v2
   - name: setup git url.insteadof
     run: |
-            cat .templates/hello.yaml
+            cat ./templates/hello.yaml
     shell: bash
            
