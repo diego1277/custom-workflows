@@ -1,2 +1,69 @@
-hello:
-  world: true
+checks:
+  serviceType: danger
+  maxreplicas: danger
+  resourceCPULimits: danger
+customChecks:
+  resourceCPULimits:
+    successMessage: CPU limits are not set
+    failureMessage: CPU limits should not be set
+    category: Efficiency
+    target: Container
+    schema:
+      '$schema': http://json-schema.org/draft-07/schema
+      type: object
+      required:
+      - resources
+      properties:
+        resources:
+          type: object
+          required:
+          - limits
+          properties:
+            limits:
+              type: object
+              properties:
+                cpu:
+                  type: string
+                  const: ''
+  maxreplicas:
+    successMessage: Multiple replicas are scheduled
+    failureMessage: Max replica limit reached
+    category: Efficiency
+    target: Controller
+    controllers:
+      include:
+      - Deployment
+    schema:
+      '$schema': http://json-schema.org/draft-07/schema
+      type: object
+      required:
+      - spec
+      properties:
+        spec:
+          type: object
+          required:
+          - replicas
+          properties:
+            replicas:
+              type: integer
+              maximum: 15
+  serviceType: 
+    successMessage: Service type is not loadbalancer
+    failureMessage: Service type can not be loadbalancer
+    category: Security
+    target: Service
+    schema:
+      '$schema': http://json-schema.org/draft-07/schema
+      type: object
+      required:
+      - spec
+      properties:
+        spec:
+          type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              not:
+                const: LoadBalancer
