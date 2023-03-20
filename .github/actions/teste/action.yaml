@@ -2,13 +2,14 @@
 name: 'Setup polaris'
 description: 'Setup polaris'
 outputs:
- custom-checks-file:
+  custom-checks-file:
     description: "Random number"
     value: ${{ steps.custom-checks.outputs.custom-checks-file }}
 runs:
   using: "composite"
   steps:
-    - id: custom-checks
+    - name: Polaris
+      id: custom-checks
       run: |
              CUSTOM_CHECKS_FILE=$(mktemp)
              cat templates/hello.yaml | tee $CUSTOM_CHECKS_FILE              
