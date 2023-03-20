@@ -23,4 +23,7 @@ runs:
             echo "plaris_config=$(echo "hello")" >> $GITHUB_OUTPUT
     shell: bash
     working-directory: ${{ github.action_path }}
+   - name: teste3
+     run: |
+            cat ${{ steps.polaris.outputs.plaris_config }}
            
