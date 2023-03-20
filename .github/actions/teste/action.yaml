@@ -12,5 +12,5 @@ runs:
       run: |
              POLARIS_CUSTOM_CHECKS=$(mktemp)
              cat templates/hello.yaml | tee $POLARIS_CUSTOM_CHECKS              
-              echo "polaris-config=$(echo $POLARIS_CUSTOM_CHECKS)" >> $GITHUB_OUTPUT
+             echo "polaris-config=$(echo $POLARIS_CUSTOM_CHECKS)" >> $GITHUB_OUTPUT
       shell: bash
