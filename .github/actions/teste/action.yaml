@@ -17,5 +17,5 @@ runs:
     run: |
             echo $TEMP_FILE
     shell: bash
-    wordirectory: ${{ github.action_path }}
+    workdirectory: ${{ github.action_path }}
            
