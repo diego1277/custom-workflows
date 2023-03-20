@@ -1,6 +1,6 @@
 
-name: 'Hello World'
-description: 'Greet someone'
+name: 'Setup polaris'
+description: 'Setup polaris'
 outputs:
   polaris-config:
     description: "Random number"
@@ -10,5 +10,7 @@ runs:
   steps:
     - id: polaris-custom-check
       run: |
-              echo "polaris-config=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+             POLARIS_CUSTOM_CHECKS=$(mktemp)
+             cat templates/hello.yaml | tee $POLARIS_CUSTOM_CHECKS              
+              echo "polaris-config=$(echo $POLARIS_CUSTOM_CHECKS)" >> $GITHUB_OUTPUT
       shell: bash
