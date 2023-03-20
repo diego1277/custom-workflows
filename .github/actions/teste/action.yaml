@@ -27,11 +27,11 @@ runs:
             cat templates/hello.yaml | tee $POLARIS_CUSTOM_CHECKS
             echo "wait...."
             cat $POLARIS_CUSTOM_CHECKS
-            echo "polaris_config=$(echo $POLARIS_CUSTOM_CHECKS)" >> $GITHUB_OUTPUT
+            echo "polaris_config=$(echo DiegoOliveira)" >> $GITHUB_OUTPUT
     shell: bash
     working-directory: ${{ github.action_path }}
-  - name: teste3
-    run: |
-            cat ${{ steps.polaris.outputs.polaris_config }}
-    shell: bash
+#  - name: teste3
+#    run: |
+#            cat ${{ steps.polaris.outputs.polaris_config }}
+#    shell: bash
            
