@@ -1,37 +1,13 @@
-name: "setup-teste"
-description: "setup teste"
-inputs:
-  terraform_version:
-    required: false
-    description: 'versao do terraform'
-    default: '1.3.3'
-    
+
+name: 'Hello World'
+description: 'Greet someone'
 outputs:
-  polaris_config:
+  random-number:
     description: "Random number"
-    value: "Diego Oliveira"
-    
-#${{ steps.polaris.outputs.polaris_config }}    
-   
+    value: ${{ steps.random-number-generator.outputs.random-id }}
 runs:
   using: "composite"
   steps:
-#  - name: setup git url.insteadof
-#    run: |
-#            cat "${{ github.action_path }}/templates/hello.yaml"
-#            cp ${{ github.action_path }}/templates/hello.yaml ${GITHUB_WORKSPACE}/
-  - id: polaris
-    name: teste2
-    run: |
-            POLARIS_CUSTOM_CHECKS=$(mktemp)
-            cat templates/hello.yaml | tee $POLARIS_CUSTOM_CHECKS
-            echo "wait...."
-            cat $POLARIS_CUSTOM_CHECKS
-            echo "polaris_config=$(echo DiegoOliveira)" >> $GITHUB_OUTPUT
-    shell: bash
-    working-directory: ${{ github.action_path }}
-#  - name: teste3
-#    run: |
-#            cat ${{ steps.polaris.outputs.polaris_config }}
-#    shell: bash
-           
+    - id: random-number-generator
+      run: echo "::set-output name=random-id::$(echo $RANDOM)"
+      shell: bash
