@@ -5,6 +5,11 @@ inputs:
     required: false
     description: 'versao do terraform'
     default: '1.3.3'
+    
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.polaris.outputs.plaris_config }}    
    
 runs:
   using: "composite"
