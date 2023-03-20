@@ -9,10 +9,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - name: setup git url.insteadof
+#  - name: setup git url.insteadof
+#    run: |
+#            cat "${{ github.action_path }}/templates/hello.yaml"
+#            cp ${{ github.action_path }}/templates/hello.yaml ${GITHUB_WORKSPACE}/
+  - name: teste2
     run: |
-            cat "${{ github.action_path }}/templates/hello.yaml"
-            cp ${{ github.action_path }}/templates/hello.yaml ${GITHUB_WORKSPACE}/
-            
+            TEMP_FILE=${{ github.action_path }}
+            echo $TEMP_FILE
     shell: bash
            
