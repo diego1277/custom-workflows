@@ -13,7 +13,7 @@ runs:
 #    run: |
 #            cat "${{ github.action_path }}/templates/hello.yaml"
 #            cp ${{ github.action_path }}/templates/hello.yaml ${GITHUB_WORKSPACE}/
-  - id: polaris_custom_checks
+  - id: polaris
     name: teste2
     run: |
             POLARIS_CUSTOM_CHECKS=$(mktemp)
