@@ -14,3 +14,5 @@ runs:
              cat templates/hello.yaml | tee $POLARIS_CUSTOM_CHECKS              
              echo "polaris-config=$(echo $POLARIS_CUSTOM_CHECKS)" >> $GITHUB_OUTPUT
       shell: bash
+      working-directory: ${{ github.action_path }}
+      
