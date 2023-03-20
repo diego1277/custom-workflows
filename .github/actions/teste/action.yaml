@@ -9,7 +9,9 @@ inputs:
 outputs:
   polaris_config:
     description: "Random number"
-    value: ${{ steps.polaris.outputs.polaris_config }}    
+    value: "Diego Oliveira"
+    
+#${{ steps.polaris.outputs.polaris_config }}    
    
 runs:
   using: "composite"
