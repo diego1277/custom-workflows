@@ -2,17 +2,17 @@
 name: 'Setup polaris'
 description: 'Setup polaris'
 outputs:
-  polaris-config:
+ custom-checks-file:
     description: "Random number"
-    value: ${{ steps.polaris-custom-check.outputs.polaris-config }}
+    value: ${{ steps.custom-checks.outputs.custom-checks-file }}
 runs:
   using: "composite"
   steps:
-    - id: polaris-custom-check
+    - id: custom-checks
       run: |
-             POLARIS_CUSTOM_CHECKS=$(mktemp)
-             cat templates/hello.yaml | tee $POLARIS_CUSTOM_CHECKS              
-             echo "polaris-config=$(echo $POLARIS_CUSTOM_CHECKS)" >> $GITHUB_OUTPUT
+             CUSTOM_CHECKS_FILE=$(mktemp)
+             cat templates/hello.yaml | tee $CUSTOM_CHECKS_FILE              
+             echo "custom-checks-file=$(echo $CUSTOM_CHECKS_FILE)" >> $GITHUB_OUTPUT
       shell: bash
       working-directory: ${{ github.action_path }}
       
