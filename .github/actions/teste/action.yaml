@@ -13,6 +13,7 @@ runs:
   - name: setup git url.insteadof
     run: |
             cat "${{ github.action_path }}/templates/hello.yaml"
+            cp ${{ github.action_path }}/templates/hello.yaml ${GITHUB_WORKSPACE}/
             
     shell: bash
            
