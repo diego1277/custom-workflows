@@ -15,7 +15,8 @@ runs:
 #            cp ${{ github.action_path }}/templates/hello.yaml ${GITHUB_WORKSPACE}/
   - name: teste2
     run: |
-            ls -la
+            TEMP_FILE=$(cat templates/hello.yaml)
+            echo $TEMP_FILE
     shell: bash
     working-directory: ${{ github.action_path }}
            
