@@ -30,6 +30,6 @@ runs:
     working-directory: ${{ github.action_path }}
   - name: teste3
     run: |
-            cat ${{ steps.polaris.outputs.plaris_config }}
+            cat ${{ steps.polaris.outputs.polaris_config }}
     shell: bash
            
