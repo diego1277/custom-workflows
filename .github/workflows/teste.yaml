@@ -3,23 +3,16 @@ name: teste
 on:
   workflow_call:
     inputs:
-      deploy_on_pull_request:
-        type: boolean
-        required: false
-        default: false
+      myValues:
+        type: string
+        required: true
         description: 'deploy apenas realizado apenas em pull request'        
-env:
-  dnr: ${{ inputs.deploy_on_pull_request }}
-        
+
 jobs:
   plan:
     runs-on: [ubuntu-latest]
     name: plan
     steps:
     - name: step1
-      if: env.dnr == 'false'
       run: |
-             echo ${{ inputs.deploy_on_pull_request }}
-    - name: step2
-      run: |
-             echo ${{ inputs.deploy_on_pull_request }}
+             echo ${{ inputs.myValues }}
