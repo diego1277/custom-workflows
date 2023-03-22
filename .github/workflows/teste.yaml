@@ -5,8 +5,7 @@ on:
     inputs:
       myValues:
         type: string
-        required: true
-        default: ${{ fromJson(inputs.myValues) }}
+        required: false
         description: 'deploy apenas realizado apenas em pull request'        
 
 jobs:
@@ -16,4 +15,4 @@ jobs:
     steps:
     - name: step1
       run: |
-             echo ${{ inputs.myValues }}
+             echo "${{ toJSON(github.event.inputs) }}"
