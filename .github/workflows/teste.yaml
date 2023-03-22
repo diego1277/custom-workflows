@@ -6,6 +6,7 @@ on:
       myValues:
         type: string
         required: true
+        default: ${{ fromJson(inputs.myValues) }}
         description: 'deploy apenas realizado apenas em pull request'        
 
 jobs:
