@@ -1,19 +1,25 @@
-
-name: 'Setup polaris'
-description: 'Setup polaris'
+name: 'Setup conftest'
+description: 'Setup conftest'
 outputs:
-  custom-checks-file:
-    description: "Random number"
-    value: ${{ steps.custom-checks.outputs.custom-checks-file }}
+ conftest-policies:
+    description: "Conftest custom check file created"
+    value: ${{ steps.conftest-policies.outputs.conftest-policies }}
 runs:
   using: "composite"
   steps:
-    - name: Polaris
-      id: custom-checks
-      run: |
-             CUSTOM_CHECKS_FILE=$(mktemp)
-             cat templates/hello.yaml | tee $CUSTOM_CHECKS_FILE              
-             echo "custom-checks-file=$(echo $CUSTOM_CHECKS_FILE)" >> $GITHUB_OUTPUT
-      shell: bash
-      working-directory: ${{ github.action_path }}
+   - name: Setup conftest
+     run: |
+            wget "https://github.com/open-policy-agent/conftest/releases/download/v0.39.2/conftest_0.39.2_Linux_x86_64.tar.gz"
+            tar xzf conftest_0.39.2_Linux_x86_64.tar.gz
+            sudo mv conftest /usr/local/bin
+     shell: bash
+  
+   - name: Setup conftest config file
+     id: conftest-policies
+     run: |
+           CONFTEST_POLICIES=$(mktemp)
+           cat policies/${{ inputs.custom-check-template }} | tee $CONFTEST_POLICIES              
+           echo "conftest-policies=$(echo $CONFTEST_POLICIES)" >> $GITHUB_OUTPUT
+     shell: bash
+     working-directory: ${{ github.action_path }}
       
