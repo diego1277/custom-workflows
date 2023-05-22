@@ -1,13 +1,12 @@
 name: teste
 
 on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
   workflow_call:
-    inputs:
-      myValues:
-        type: string
-        required: false
-        description: 'deploy apenas realizado apenas em pull request'        
-
+  
 jobs:
   plan:
     runs-on: [ubuntu-latest]
@@ -15,4 +14,4 @@ jobs:
     steps:
     - name: step1
       run: |
-             echo "${{ toJSON(inputs.myValues) }}"
+             echo "step 1"
