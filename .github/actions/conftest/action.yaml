@@ -6,7 +6,10 @@ inputs:
     required: false
     default: "0.39.2"
     description: 'conftest version'    
-    
+  bot_github_token:
+    type: string
+    required: true
+    description: 'bot github token'        
     
 runs:
   using: "composite"
@@ -23,4 +26,4 @@ runs:
       persist-credentials: false
       repository: doliveiraorg/guardrails
       path: policies
-      token: ${{ secrets.BOT_GITHUB_TOKEN }}
+      token: ${{ inputs.bot_github_token }}
