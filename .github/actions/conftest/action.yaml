@@ -24,4 +24,3 @@ runs:
       repository: doliveiraorg/guardrails
       path: policies
       token: ${{ secrets.BOT_GITHUB_TOKEN }}
-    shell: bash
