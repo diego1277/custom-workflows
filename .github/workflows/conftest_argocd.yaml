@@ -13,9 +13,5 @@ jobs:
   guardrails:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
     steps:
-    - name: Setup conftest
-      run: |
-            wget "https://github.com/open-policy-agent/conftest/releases/download/v${{ inputs.conftest_version }}/conftest_${{ inputs.conftest_version }}_Linux_arm64.tar.gz"
-            tar xzf conftest_${{ inputs.conftest_version }}_Linux_arm64.tar.gz
-            sudo mv conftest /usr/local/bin 
-            conftest --version
+    - name: Setup terraform
+      uses: doliveiraorg/custom-workflows/.github/actions/conftest@main
