@@ -13,6 +13,7 @@ runs:
   steps:
   - name: Setup conftest
     run: |
-          wget "https://github.com/open-policy-agent/conftest/releases/download/v0.39.2/conftest_${{ inputs.conftest_version }}_Linux_arm64.tar.gz"
+          wget "https://github.com/open-policy-agent/conftest/releases/download/v${{ inputs.conftest_version }}/conftest_${{ inputs.conftest_version }}_Linux_arm64.tar.gz"
           tar xzf conftest_${{ inputs.conftest_version }}_Linux_arm64.tar.gz
-          sudo mv conftest /usr/local/bin 
+          sudo mv conftest /usr/local/bin
+    shell: bash
