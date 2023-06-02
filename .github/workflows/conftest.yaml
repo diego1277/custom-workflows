@@ -1,23 +1,20 @@
+name: Guardrails
 
-
-
-
-
-
-
-inputs:
-  conftest_version:
-    type: string
-    required: false
-    default: "0.39.2"
-    description: 'conftest version'    
-    
-    
-runs:
-  using: "composite"
-  steps:
-  - name: Setup conftest
-    run: |
-          wget "https://github.com/open-policy-agent/conftest/releases/download/v0.39.2/conftest_${{ inputs.conftest_version }}_Linux_arm64.tar.gz"
-          tar xzf conftest_${{ inputs.conftest_version }}_Linux_arm64.tar.gz
-          sudo mv conftest /usr/local/bin 
+on:
+  workflow_call:
+    inputs:
+      conftest_version:
+        type: string
+        required: false
+        default: "0.39.2"
+        description: 'conftest version'        
+   
+jobs:
+  guardrails:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup conftest
+      run: |
+            wget "https://github.com/open-policy-agent/conftest/releases/download/v${{ inputs.conftest_version }}/conftest_${{ inputs.conftest_version }}_Linux_arm64.tar.gz"
+            tar xzf conftest_${{ inputs.conftest_version }}_Linux_arm64.tar.gz
+            sudo mv conftest /usr/local/bin 
