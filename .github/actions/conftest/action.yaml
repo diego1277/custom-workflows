@@ -17,3 +17,11 @@ runs:
           tar xzf conftest_${{ inputs.conftest_version }}_Linux_arm64.tar.gz
           sudo mv conftest /usr/local/bin
     shell: bash
+  - name: Checkout guardrails repo
+    uses: actions/checkout@v3
+    with:
+      persist-credentials: false
+      repository: doliveiraorg/guardrails
+      path: policies
+      token: ${{ secrets.BOT_GITHUB_TOKEN }}
+    shell: bash
