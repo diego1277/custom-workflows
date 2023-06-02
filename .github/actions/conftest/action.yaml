@@ -1,10 +1,11 @@
-name: "setup infracost"
-description: "setup infracost"
-#inputs:
-#  repo_terraform_gh_token:
-#    type: string
-#    required: false
-#    description: 'token terraform modules'    
+name: "setup conftest"
+description: "setup conftest"
+inputs:
+  conftest_version:
+    type: string
+    required: false
+    default: "0.39.2"
+    description: 'conftest version'    
     
     
 runs:
@@ -12,6 +13,6 @@ runs:
   steps:
   - name: Setup conftest
     run: |
-          wget "https://github.com/open-policy-agent/conftest/releases/download/v0.39.2/conftest_0.39.2_Linux_arm64.tar.gz"
-          tar xzf conftest_0.39.2_Linux_arm64.tar.gz
+          wget "https://github.com/open-policy-agent/conftest/releases/download/v0.39.2/conftest_${{ inputs.conftest_version }}_Linux_arm64.tar.gz"
+          tar xzf conftest_${{ inputs.conftest_version }}_Linux_arm64.tar.gz
           sudo mv conftest /usr/local/bin 
