@@ -17,3 +17,6 @@ jobs:
       uses: doliveiraorg/custom-workflows/.github/actions/conftest@main
       with:
         bot_github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
+    - name: debug
+      run: |
+             ls -la policies/
