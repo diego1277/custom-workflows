@@ -10,6 +10,10 @@ jobs:
   guardrails:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
     steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+         fetch-depth: 0    
     - name: Setup terraform
       uses: doliveiraorg/custom-workflows/.github/actions/conftest@main
       with:
