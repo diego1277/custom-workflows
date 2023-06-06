@@ -13,6 +13,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
+         path: argocd
          fetch-depth: 0    
     - name: Setup terraform
       uses: doliveiraorg/custom-workflows/.github/actions/conftest@main
@@ -20,20 +21,6 @@ jobs:
         bot_github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
     - name: debug
       run: |
-            ARGOCD_TEMPLATES=("app.yaml" "app.yml" "project.yaml" "project.yml")
-            ARGOCD_FILES=$(git diff --name-only HEAD^1 HEAD)
-            for file_path in $ARGOCD_FILES; do
-              if [ -e $file_path ];
-              then
-                OIFS="$IFS"
-                IFS='/'
-                read -a FILE_AS_LIST <<< "$file_path"
-                IFS="$OIFS"
-                FILE="${FILE_AS_LIST[${#FILE_AS_LIST[@]}-1]}"
-                if echo "${ARGOCD_TEMPLATES[@]}" | grep -wq "$FILE";
-                then
-                    cat $file_path
-                fi
-              fi
-            done      
-            cat policies/kubernetes/argocd/namespace.rego
+            ls -la argocd/
+            echo "--++--++--++--++--++--++--++--"
+            ls -la policies/kubernetes/argocd
