@@ -22,8 +22,9 @@ jobs:
         bot_github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
     - name: debug
       run: |
-            changed_files=$(git diff --name-only origin/${{ github.base_ref }} ${{ github.head_ref }})
-            echo "changed files: $changed_files"
+            git branch -a
+#            changed_files=$(git diff --name-only origin/${{ github.base_ref }} ${{ github.head_ref }})
+#            echo "changed files: $changed_files"
 #            ARGOCD_TEMPLATES=("app.yaml" "app.yml" "project.yaml" "project.yml")
 #            ARGOCD_FILES=$(git diff --name-only HEAD^1 HEAD)
 #            for file_path in $ARGOCD_FILES; do
