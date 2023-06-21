@@ -13,31 +13,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-#         ref: '${{ github.head_ref }}'
          path: argocd
          fetch-depth: 0    
     - name: Checkout conftest repo
       uses: doliveiraorg/custom-workflows/.github/actions/conftest@main
       with:
         bot_github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v36
     - name: debug
       run: |
-            git branch -a
-#            changed_files=$(git diff --name-only origin/${{ github.base_ref }} ${{ github.head_ref }})
-#            echo "changed files: $changed_files"
-#            ARGOCD_TEMPLATES=("app.yaml" "app.yml" "project.yaml" "project.yml")
-#            ARGOCD_FILES=$(git diff --name-only HEAD^1 HEAD)
-#            for file_path in $ARGOCD_FILES; do
-#              if [ -e $file_path ];
-#              then
-#                OIFS="$IFS"
-#                IFS='/'
-#                read -a FILE_AS_LIST <<< "$file_path"
-#                IFS="$OIFS"
-#                FILE="${FILE_AS_LIST[${#FILE_AS_LIST[@]}-1]}"
-#                if echo "${ARGOCD_TEMPLATES[@]}" | grep -wq "$FILE";
-#                then
-#                    cat $file_path
-#                fi
-#              fi
-#            done
+            echo ${{ steps.changed-files.outputs.all_changed_files }}
