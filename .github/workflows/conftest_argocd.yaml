@@ -15,13 +15,15 @@ jobs:
       with:
          path: argocd
          fetch-depth: 0    
-    - name: Checkout conftest repo
-      uses: doliveiraorg/custom-workflows/.github/actions/conftest@main
-      with:
-        bot_github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
+#    - name: Checkout conftest repo
+#      uses: doliveiraorg/custom-workflows/.github/actions/conftest@main
+#      with:
+#        bot_github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
     - name: Get changed files#
       id: changed-files
       uses: tj-actions/changed-files@v36
+      with:
+        files: argocd/*.{yaml,yml}
     - name: debug
       run: |
             echo ${{ steps.changed-files.outputs.all_changed_files }}
