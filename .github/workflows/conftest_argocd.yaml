@@ -13,7 +13,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-         path: argocd
+#         path: argocd
          fetch-depth: 0    
 #    - name: Checkout conftest repo
 #      uses: doliveiraorg/custom-workflows/.github/actions/conftest@main
@@ -22,8 +22,8 @@ jobs:
     - name: Get changed files#
       id: changed-files
       uses: tj-actions/changed-files@v36
-      with:
-        files: argocd/*.{yaml,yml}
+#      with:
+#        files: argocd/*.{yaml,yml}
     - name: debug
       run: |
             echo ${{ steps.changed-files.outputs.all_changed_files }}
