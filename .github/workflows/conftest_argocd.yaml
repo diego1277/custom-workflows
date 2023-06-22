@@ -28,5 +28,16 @@ jobs:
       run: |
             for file in ${{ steps.changed-files.outputs.all_changed_files }}
             do
-                 conftest test $file --policy policies/kubernetes/argocd/namespace.rego --no-fail -n argocd -o json
+                CONFTEST_POLICIES_PATH="policies/kubernetes/argocd"
+                CONFTEST_NAMESPACE="argocd"
+                CONFTEST_FAILURES="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].failures')"
+                CONFTEST_WARNINGS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].warnings')"
+                CONFTEST_SUCCESS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].success')"
+                echo "####### Partial results for file $file #########"
+                echo $CONFTEST_FAILURES
+                echo $CONFTEST_WARNINGS
+                echo $CONFTEST_SUCCESS
+                echo "#################### end #######################"
             done
+#             conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json
+    
