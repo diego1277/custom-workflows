@@ -23,39 +23,40 @@ jobs:
       uses: tj-actions/changed-files@v36
     - name: Debug
       run: |
-             ls -1
-    - name: Check conftest
-      run: |
-            for file in ${{ steps.changed-files.outputs.all_changed_files }}
-            do
-                CONFTEST_POLICIES_PATH="policies/kubernetes/argocd"
-                CONFTEST_NAMESPACE="argocd"
-                CONFTEST_FAILURES="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].failures')"
-                CONFTEST_WARNINGS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].warnings')"
-                CONFTEST_SUCCESS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].success')"
-                echo "####### Partial results for file $file #########"
-                if [[ $CONFTEST_FAILURES != nill ]]
-                echo $CONFTEST_WARNINGS
-                echo $CONFTEST_SUCCESS
-                echo "#################### end #######################"
-            done
+             echo ${{ secrets.BATATINHA }}
+
+#    - name: Check conftest
+#      run: |
+#            for file in ${{ steps.changed-files.outputs.all_changed_files }}
+#            do
+#                CONFTEST_POLICIES_PATH="policies/kubernetes/argocd"
+#                CONFTEST_NAMESPACE="argocd"
+#                CONFTEST_FAILURES="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].failures')"
+#                CONFTEST_WARNINGS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].warnings')"
+#                CONFTEST_SUCCESS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].success')"
+#                echo "####### Partial results for file $file #########"
+#                if [[ $CONFTEST_FAILURES != nill ]]
+#                echo $CONFTEST_WARNINGS
+#                echo $CONFTEST_SUCCESS
+#                echo "#################### end #######################"
+#            done
 #             conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json
 
-    - name: Update Pull Request with Results
-      id: update-pr
+#    - name: Update Pull Request with Results
+#      id: update-pr
 #      if: steps.conftest-scan.outputs.logs != '' && steps.file_check.outputs.helmfile == 'true'
-      uses: actions/github-script@v6
+#      uses: actions/github-script@v6
 #      env:
 #        CT_RESULT_BASE64: ${{ steps.conftest-scan.outputs.logs }}
 #        RUN_ID: ${{ github.run_id }}
-      with:
-        github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
-        result-encoding: string
-        script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: "this is my body"
-            })
-      continue-on-error: true
+#      with:
+#        github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
+#        result-encoding: string
+#        script: |
+#            github.rest.issues.createComment({
+#              issue_number: context.issue.number,
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              body: "this is my body"
+#            })
+#      continue-on-error: true
