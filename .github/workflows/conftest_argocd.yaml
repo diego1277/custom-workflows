@@ -42,21 +42,21 @@ jobs:
 #            done
 #             conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json
 
-#    - name: Update Pull Request with Results
-#      id: update-pr
+    - name: Update Pull Request with Results
+      id: update-pr
 #      if: steps.conftest-scan.outputs.logs != '' && steps.file_check.outputs.helmfile == 'true'
-#      uses: actions/github-script@v6
+      uses: actions/github-script@v6
 #      env:
 #        CT_RESULT_BASE64: ${{ steps.conftest-scan.outputs.logs }}
 #        RUN_ID: ${{ github.run_id }}
-#      with:
-#        github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
-#        result-encoding: string
-#        script: |
-#            github.rest.issues.createComment({
-#              issue_number: context.issue.number,
-#              owner: context.repo.owner,
-#              repo: context.repo.repo,
-#              body: "this is my body"
-#            })
-#      continue-on-error: true
+      with:
+        github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
+        result-encoding: string
+        script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "this is my body"
+            })
+      continue-on-error: true
