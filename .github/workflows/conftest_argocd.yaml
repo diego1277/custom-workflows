@@ -23,7 +23,7 @@ jobs:
       uses: tj-actions/changed-files@v36
     - name: Debug
       run: |
-             echo ${{ secrets.BATATINHA }}
+             echo ${{ secrets.BOT_GITHUB_TOKEN }}
 
 #    - name: Check conftest
 #      run: |
