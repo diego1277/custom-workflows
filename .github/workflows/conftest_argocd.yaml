@@ -21,10 +21,6 @@ jobs:
     - name: Get changed files#
       id: changed-files
       uses: tj-actions/changed-files@v36
-    - name: Debug
-      run: |
-             echo ${{ secrets.BOT_GITHUB_TOKEN }}
-
     - name: Check conftest
       run: |
             for file in ${{ steps.changed-files.outputs.all_changed_files }}
@@ -34,10 +30,10 @@ jobs:
                 CONFTEST_FAILURES="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].failures')"
                 CONFTEST_WARNINGS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].warnings')"
                 CONFTEST_SUCCESS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].success')"
-                echo "####### Partial results for file $file #########"
                 if [[ $CONFTEST_FAILURES != nill ]]
-                  echo $CONFTEST_FAILURES
-                  echo "#################### end #######################"
+                then
+                    echo $CONFTEST_FAILURES
+                fi
             done
 #           conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json
 #    - name: Update Pull Request with Results
