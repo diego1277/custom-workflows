@@ -30,7 +30,7 @@ jobs:
                 CONFTEST_FAILURES="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].failures')"
                 CONFTEST_WARNINGS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].warnings')"
                 CONFTEST_SUCCESS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].success')"
-                if [[ $CONFTEST_FAILURES != nill ]]
+                if [[ $CONFTEST_FAILURES != "null" ]]
                 then
                     echo "start"
                     echo $CONFTEST_FAILURES
