@@ -24,6 +24,8 @@ jobs:
     - name: Check conftest
       run: |
           TEMP_FILE=$(mktemp)
+          CONFTEST_POLICIES_PATH="policies/kubernetes/argocd"
+          CONFTEST_NAMESPACE="argocd"
           for file in ${{ steps.changed-files.outputs.all_changed_files }}
           do
               conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json | jq -r '.[] | ((.warnings[]?.msg // []), (.failures[]?.msg // []) | select(. != null))' | tr -d '[]"' | sed '/^\s*$/d' | tee $TEMP_FILE
