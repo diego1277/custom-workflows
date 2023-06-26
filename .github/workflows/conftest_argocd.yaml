@@ -22,23 +22,30 @@ jobs:
       id: changed-files
       uses: tj-actions/changed-files@v36
     - name: Check conftest
-      uses: actions/github-script@v6
-      with:
-        script: |
-            for file in ${{ steps.changed-files.outputs.all_changed_files }}
-            do
-                CONFTEST_POLICIES_PATH="policies/kubernetes/argocd"
-                CONFTEST_NAMESPACE="argocd"
-                CONFTEST_FAILURES="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].failures')"
-                CONFTEST_WARNINGS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].warnings')"
-                CONFTEST_SUCCESS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].success')"
-                if [[ $CONFTEST_FAILURES != "null" ]]
-                then
-                    echo "start"
-                    echo $CONFTEST_FAILURES
-                    echo "end"
-                fi
-            done
+      run: |
+          TEMP_FILE=$(mktemp)
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}
+          do
+              conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json | jq -r '.[] | ((.warnings[]?.msg // []), (.failures[]?.msg // []) | select(. != null))' | tr -d '[]"' | sed '/^\s*$/d' | tee $TEMP_FILE
+              cat $TEMP_FILE
+          done
+#    - name: Check conftest
+#      run: |
+#          for file in ${{ steps.changed-files.outputs.all_changed_files }}
+#          do
+#              conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json | jq -r '.[] | ((.warnings[]?.msg // []), (.failures[]?.msg // []) | select(. != null))' | tr -d '[]"' | sed '/^\s*$/d' | tee $TEMP_FILE
+#              CONFTEST_POLICIES_PATH="policies/kubernetes/argocd"
+#              CONFTEST_NAMESPACE="argocd"
+#              CONFTEST_FAILURES="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].failures')"
+#              CONFTEST_WARNINGS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].warnings')"
+#              CONFTEST_SUCCESS="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[0].success')"
+#              if [[ $CONFTEST_FAILURES != "null" ]]
+#              then
+#                  echo "start"
+#                  echo $CONFTEST_FAILURES
+#                  echo "end"
+#              fi
+#          done          
 #           conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json
 #    - name: Update Pull Request with Results
 #      id: update-pr
