@@ -31,7 +31,15 @@ jobs:
           do
               conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json | jq -r '.[] | ((.warnings[]?.msg // []), (.failures[]?.msg // []) | select(. != null))' | tr -d '[]"' | sed '/^\s*$/d' | tee -a $TEMP_FILE
           done
-          cat $TEMP_FILE
+          echo "msg=$TEMP_FILE" >> $GITHUB_OUTPUT 
+          
+  open-pr:
+    runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
+    needs: guardrails
+    steps:          
+    - name: Check conftest
+      run: |
+            echo needs.guardrails.outputs.msg
 #    - name: Check conftest
 #      run: |
 #          for file in ${{ steps.changed-files.outputs.all_changed_files }}
