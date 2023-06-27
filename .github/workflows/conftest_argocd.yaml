@@ -9,6 +9,8 @@ on:
 jobs:
   guardrails:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
+    outputs:
+      myoutput: ${{ steps.check-conftest.outputs.msg }}    
     steps:
     - name: Checkout
       uses: actions/checkout@v3
