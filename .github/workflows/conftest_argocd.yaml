@@ -39,7 +39,7 @@ jobs:
     steps:          
     - name: Check conftest
       run: |
-            echo needs.guardrails.outputs.msg
+            echo ${{ needs.guardrails.outputs.msg }}
 #    - name: Check conftest
 #      run: |
 #          for file in ${{ steps.changed-files.outputs.all_changed_files }}
