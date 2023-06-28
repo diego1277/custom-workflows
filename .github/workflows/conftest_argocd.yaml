@@ -38,10 +38,19 @@ jobs:
   open-pr:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
     needs: guardrails
-    steps:          
-    - name: Check conftest
-      run: |
-            echo ${{ needs.guardrails.outputs.msg }} | base64 --decode
+    steps:                    
+    - name: Update Pull Request with Results
+      uses: actions/github-script@v6
+      env:
+        MSG_BASE64: ${{ needs.guardrails.outputs.msg }}
+      with:
+        github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
+        result-encoding: string
+        script: |
+                let msgBase64 = process.env.MSG_BASE64;
+                let msgString = Buffer.from(msgBase64, 'base64').toString('utf-8');
+                console.log(msgString);
+               
 #    - name: Check conftest
 #      run: |
 #          for file in ${{ steps.changed-files.outputs.all_changed_files }}
