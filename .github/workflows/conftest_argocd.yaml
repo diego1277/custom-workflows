@@ -36,7 +36,7 @@ jobs:
           echo "Debug starts"
           cat $TEMP_FILE
           echo "Debug ends"
-#          echo "msg=$(cat ${TEMP_FILE})" >> $GITHUB_OUTPUT 
+          echo "msg=$(cat $TEMP_FILE)" >> $GITHUB_OUTPUT 
           
   open-pr:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
