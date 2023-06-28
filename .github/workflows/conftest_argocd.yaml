@@ -33,7 +33,10 @@ jobs:
           do
               conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json | jq -r '.[] | ((.warnings[]?.msg // []), (.failures[]?.msg // []) | select(. != null))' | tr -d '[]"' | sed '/^\s*$/d' | tee -a $TEMP_FILE
           done
-          echo "msg=$(cat ${TEMP_FILE})" >> $GITHUB_OUTPUT 
+          echo "Debug starts"
+          cat $TEMP_FILE
+          echo "Debug ends"
+#          echo "msg=$(cat ${TEMP_FILE})" >> $GITHUB_OUTPUT 
           
   open-pr:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
