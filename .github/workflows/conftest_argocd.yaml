@@ -31,7 +31,8 @@ jobs:
           CONFTEST_NAMESPACE="argocd"
           for file in ${{ steps.changed-files.outputs.all_changed_files }}
           do
-              conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json | jq -r '.[] | ((.warnings[]?.msg // []), (.failures[]?.msg // []) | select(. != null))' | tr -d '[]"' | sed '/^\s*$/d' | tee -a $TEMP_FILE
+              CONFTEST_EXEC="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json | jq -r '.[] | ((.warnings[]?.msg // []), (.failures[]?.msg // []) | select(. != null))' | tr -d '[]"' | sed '/^\s*$/d')__" 
+              echo $CONFTEST_EXEC | tee -a $TEMP_FILE
           done
           echo "msg=$(cat $TEMP_FILE | base64 | tr -d '\n')" >> $GITHUB_OUTPUT 
           
