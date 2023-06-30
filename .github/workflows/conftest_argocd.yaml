@@ -48,11 +48,14 @@ jobs:
         github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
         result-encoding: string
         script: |
-                let msgBase64 = process.env.MSG_BASE64;
-                let msgString = Buffer.from(msgBase64, 'base64').toString('utf-8');
-                for (const item of msgString)) {
-                    console.log(item);
-                }
+                const msgBase64 = process.env.MSG_BASE64;
+                const msgString = Buffer.from(msgBase64, 'base64').toString('utf-8');
+                
+                console.log(msgString)
+
+#                for (const item of msgString)) {
+#                    console.log(item);
+#                }
                
 #    - name: Check conftest
 #      run: |
