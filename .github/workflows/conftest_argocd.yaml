@@ -51,7 +51,8 @@ jobs:
                 const msgBase64 = process.env.MSG_BASE64;
                 const msgString = Buffer.from(msgBase64, 'base64').toString('utf-8');
                 const splitMsgString = msgString.split('#');
-                splitMsgString.forEach((item, index) => {
+                const filteredMsgString = splitMsgString.filter(item => item.trim() !== '');
+                filteredMsgString.forEach((item, index) => {
                   console.log(index);
                   console.log(item);
                 })
