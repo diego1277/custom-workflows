@@ -51,11 +51,9 @@ jobs:
                 const msgBase64 = process.env.MSG_BASE64;
                 const msgString = Buffer.from(msgBase64, 'base64').toString('utf-8');
                 const splitMsgString = msgString.split('#');
-                console.log(splitMsgString)
-
-#                for (const item of msgString)) {
-#                    console.log(item);
-#                }
+                splitMsgString.forEach(item => {
+                  console.log(item);
+                })
                
 #    - name: Check conftest
 #      run: |
