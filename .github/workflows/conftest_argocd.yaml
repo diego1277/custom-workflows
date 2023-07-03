@@ -30,6 +30,7 @@ jobs:
           TEMP_FILE=$(mktemp)
           CONFTEST_POLICIES_PATH="policies/kubernetes/argocd"
           CONFTEST_NAMESPACE="argocd"
+          CONFTEST_FAILURES_STATUS='false'
           for file in ${{ steps.changed-files.outputs.all_changed_files }}
           do
               CONFTEST_EXEC="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[] | ((.warnings[]?.msg // []), (.failures[]?.msg // []) | select(. != null))' | tr -d '[]"' | sed '/^\s*$/d')#" 
@@ -41,7 +42,8 @@ jobs:
 
               if [ "$CONFTEST_FAILURES" != "null" ]
               then 
-                echo "failure=true" >> $GITHUB_OUTPUT
+                CONFTEST_FAILURES_STATUS='true'
+                echo "failure=$CONFTEST_FAILURES_STATUS" >> $GITHUB_OUTPUT
               fi                   
           done
           echo "msg=$(cat $TEMP_FILE | base64 | tr -d '\n')" >> $GITHUB_OUTPUT     
