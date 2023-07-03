@@ -30,7 +30,7 @@ jobs:
           TEMP_FILE=$(mktemp)
           CONFTEST_POLICIES_PATH="policies/kubernetes/argocd"
           CONFTEST_NAMESPACE="argocd"
-          CONFTEST_FAILURES_STATUS='false'
+          echo "failure=false" >> $GITHUB_OUTPUT
           for file in ${{ steps.changed-files.outputs.all_changed_files }}
           do
               CONFTEST_EXEC="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[] | ((.warnings[]?.msg // []), (.failures[]?.msg // []) | select(. != null))' | tr -d '[]"' | sed '/^\s*$/d')#" 
@@ -42,11 +42,10 @@ jobs:
 
               if [ "$CONFTEST_FAILURES" != "null" ]
               then 
-                CONFTEST_FAILURES_STATUS='true'
-                echo "failure=$CONFTEST_FAILURES_STATUS" >> $GITHUB_OUTPUT
+                echo "failure=true" >> $GITHUB_OUTPUT
               fi                   
           done
-          echo "msg=$(cat $TEMP_FILE | base64 | tr -d '\n')" >> $GITHUB_OUTPUT     
+          echo "msg=$(cat $TEMP_FILE | base64 | tr -d '\n')" >> $GITHUB_OUTPUT
   open-pr:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
     needs: guardrails
