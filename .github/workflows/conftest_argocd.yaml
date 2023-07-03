@@ -10,7 +10,8 @@ jobs:
   guardrails:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
     outputs:
-      msg: ${{ steps.check-conftest.outputs.msg }}    
+      msg: ${{ steps.check-conftest.outputs.msg }}
+      failure: ${{ steps.check-conftest.outputs.failure }}
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -31,11 +32,19 @@ jobs:
           CONFTEST_NAMESPACE="argocd"
           for file in ${{ steps.changed-files.outputs.all_changed_files }}
           do
-              CONFTEST_EXEC="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n argocd -o json | jq -r '.[] | ((.warnings[]?.msg // []), (.failures[]?.msg // []) | select(. != null))' | tr -d '[]"' | sed '/^\s*$/d')#" 
+              CONFTEST_EXEC="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[] | ((.warnings[]?.msg // []), (.failures[]?.msg // []) | select(. != null))' | tr -d '[]"' | sed '/^\s*$/d')#" 
               echo $CONFTEST_EXEC | tee -a $TEMP_FILE
+              
+              CONFTEST_FAILURES="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n kubernetes -o json | jq -r '.[0].failures')"
+
+              echo $CONFTEST_FAILURES
+
+              if [ "$CONFTEST_FAILURES" != "null" ]
+              then 
+                echo "failure=true" >> $GITHUB_OUTPUT
+              fi                   
           done
-          echo "msg=$(cat $TEMP_FILE | base64 | tr -d '\n')" >> $GITHUB_OUTPUT 
-          
+          echo "msg=$(cat $TEMP_FILE | base64 | tr -d '\n')" >> $GITHUB_OUTPUT     
   open-pr:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
     needs: guardrails
@@ -60,3 +69,6 @@ jobs:
                     body: item.trim()
                   })                                
                 })
+    - name: Check status
+#      if: steps.conftest-scan.outputs.failure == 'true'
+      run: echo ${{ needs.guardrails.outputs.failure }}
