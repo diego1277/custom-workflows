@@ -71,5 +71,5 @@ jobs:
                   })                                
                 })
     - name: Check status
-#      if: steps.conftest-scan.outputs.failure == 'true'
-      run: echo ${{ needs.guardrails.outputs.failure }}
+      if: steps.conftest-scan.outputs.failure == 'true'
+      run: exit 1
