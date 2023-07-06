@@ -38,8 +38,9 @@ jobs:
               
               CONFTEST_FAILURES="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n kubernetes -o json | jq -r '.[0].failures')"
 
+              echo "@@Result of conftest failures@@"
               echo $CONFTEST_FAILURES
-
+              echo "@@@end of results of conftest failures@@@"
               if [ "$CONFTEST_FAILURES" != "null" ]
               then 
                 echo "failure=true" >> $GITHUB_OUTPUT
