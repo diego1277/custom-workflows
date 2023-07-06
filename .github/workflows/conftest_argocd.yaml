@@ -36,7 +36,7 @@ jobs:
               CONFTEST_EXEC="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json | jq -r '.[] | ((.warnings[]?.msg // []), (.failures[]?.msg // []) | select(. != null))' | tr -d '[]"' | sed '/^\s*$/d')#" 
               echo $CONFTEST_EXEC | tee -a $TEMP_FILE
               
-              CONFTEST_FAILURES="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n kubernetes -o json | jq -r '.[0].failures')"
+              CONFTEST_FAILURES="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n kubernetes -o json | jq -r '.[0].warnings')"
 
               echo "@@Result of conftest failures@@"
               echo $CONFTEST_FAILURES
