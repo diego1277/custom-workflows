@@ -38,6 +38,10 @@ jobs:
               
               CONFTEST_FAILURES="$(conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n kubernetes -o json | jq -r '.[0].warnings')"
 
+              echo "+++++++++++++++++++++++++++++++++++++++++++++++++++"
+              conftest test $file --policy $CONFTEST_POLICIES_PATH --no-fail -n $CONFTEST_NAMESPACE -o json
+              echo "+++++++++++++++++++++++++++++++++++++++++++++++++++"
+              
               echo "@@Result of conftest failures@@"
               echo $CONFTEST_FAILURES
               echo "@@@end of results of conftest failures@@@"
