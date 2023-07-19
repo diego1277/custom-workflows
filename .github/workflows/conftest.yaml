@@ -89,30 +89,6 @@ jobs:
                 echo "helmfile=false" >> $GITHUB_OUTPUT
             fi          
         shell: bash
-      
-      - name: Set SSH key
-        if: steps.file_check.outputs.helmfile == 'true'
-        id: ssh-setup
-        shell: bash
-        env:
-          LAB_SSH_KEY: ${{secrets.LAB_SSH_KEY}}
-        run: |
-          mkdir -p "$HOME/.ssh"
-          SSH_PATH="$HOME/.ssh"
-
-          touch "$SSH_PATH/known_hosts"
-          echo "$LAB_SSH_KEY" > "$SSH_PATH/id_rsa"
-        
-          chmod 700 "$SSH_PATH"
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          chmod 600 "$SSH_PATH/known_hosts"
-          chmod 600 "$SSH_PATH/id_rsa"
-        
-          eval "$(ssh-agent -s)"
-          ssh-add "$SSH_PATH/id_rsa"
-          
-          echo $SSH_AUTH_SOCK
-          echo "ssh-socket=$SSH_AUTH_SOCK" >> $GITHUB_OUTPUT      
 
       - name: Check value
         run: echo ${{ steps.file_check.outputs.helmfile }}
