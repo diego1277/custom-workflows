@@ -54,6 +54,7 @@ on:
                 
 env:
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+  LAB_SSH_KEY: ${{ secrets.LAB_SSH_KEY }}
 
 jobs:
   discovery_environment:
