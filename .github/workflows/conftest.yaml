@@ -59,7 +59,7 @@ jobs:
   discovery_environment:
     name: Discovery helmifle environments
     if: ${{ github.actor != 'dependabot[bot]' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     outputs:
       envs: ${{ steps.get-env.outputs.envs }}
       branch: ${{ steps.branch.outputs.branch }}
@@ -120,7 +120,7 @@ jobs:
   conftest-scanning:
     name: K8s Scanning Validator
     if: ${{ needs.discovery_environment.outputs.helmfile == 'true' && github.actor != 'dependabot[bot]'}}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: [discovery_environment]
     outputs:
       warning: ${{ steps.conftest-scan.outputs.warning }}
