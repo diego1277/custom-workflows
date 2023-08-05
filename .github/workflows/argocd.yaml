@@ -10,7 +10,18 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-         fetch-depth: 0    
+         fetch-depth: 0   
+    - name: Kubernetes Set Context
+      uses: Azure/k8s-set-context@v3.0
+      with:
+        method: kubeconfig
+        kubeconfig: '${{ secrets.K8S_KUBECONFIG }}'
+    - name: install kubectl
+      run: |
+             sudo curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl"
+             sudo chmod +x kubectl
+             sudo mkdir -p ~/.local/bin
+             sudo mv ./kubectl ~/.local/bin/kubectl 
     - name: Get changed files#
       id: changed-files
       uses: tj-actions/changed-files@v36
