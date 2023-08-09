@@ -40,7 +40,7 @@ jobs:
                 FILE="${FILE_AS_LIST[${#FILE_AS_LIST[@]}-1]}"
                 if echo "${ARGOCD_TEMPLATES[@]}" | grep -wq "$FILE";
                 then
-                    kubectl apply -f $file_path
+                    cat $file_path
                 fi
               fi
             done
