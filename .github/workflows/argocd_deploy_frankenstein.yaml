@@ -35,7 +35,7 @@ jobs:
       run: |
              REPOSITORY=$(echo "${{ inputs.repository }}" | cut -d'/' -f3)
              export IMAGE_TAG=$REPOSITORY:${{ inputs.tag }}
-             yq eval -i '.frankenstein.imageTag = env(IMAGE_TAG)' charts/values.yaml
+             yq eval -i '.frankenstein.tag = env(IMAGE_TAG)' charts/values.yaml
              cat charts/values.yaml
     - name: 🚀 Commit to main branch
       run: |
