@@ -37,3 +37,10 @@ jobs:
              export IMAGE_TAG=$REPOSITORY:${{ inputs.tag }}
              yq eval -i '.frankenstein.imageTag = env(IMAGE_TAG)' charts/values.yaml
              cat charts/values.yaml
+    - name: 🚀 Commit to main branch
+      run: |
+        git config --local user.name github-actions
+        git config --local user.email github-actions@github.com
+        git add changelog.md
+        git commit -m "🖉 Update changelog with ${GITHUB_REF#refs/*/}"
+        git push
