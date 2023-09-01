@@ -40,7 +40,7 @@ jobs:
     - name: 🚀 Commit to main branch
       run: |
         git config --local user.name github-actions
-        git config --local user.email github-actions@github.com
+        git config --local user.email diego.dso123@gmail.com
         git add charts/values.yaml
         git commit -m "🖉 Update changelog with ${GITHUB_REF#refs/*/}"
         git push
