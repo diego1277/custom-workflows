@@ -11,3 +11,16 @@ jobs:
       uses: actions/checkout@v3
       with:
          fetch-depth: 0
+    - name: Setup yq
+      run: |
+             curl -LO https://github.com/mikefarah/yq/releases/download/v4.35.1/yq_linux_arm64
+             chmod +x yq_linux_arm64
+             mv yq_linux_arm64 yq
+             sudo mv yq /usr/local/bin/
+    - name: debug
+      run: |
+             tag="gobank:20130901x"
+             export IMAGE_TAG=$tag
+             ls -1
+             yq eval -i '.frankenstein.imageTag = env(IMAGE_TAG)' charts/values.yaml
+             cat charts/values.yaml
