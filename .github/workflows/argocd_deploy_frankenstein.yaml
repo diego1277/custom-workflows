@@ -3,29 +3,20 @@ name: Argocd Frankenstein
 on:
   workflow_call:
     inputs:
-      dispatches_repo:
+      yq_version:
         type: string
-        description: 'terraform repo'
-        default: 'https://api.github.com/repos/doliveiraorg/terraform/dispatches'
+        description: 'yq version'
+        default: 'v4.35.1'
         required: false
-      dispatches_event_type:
+      repository:
         type: string
-        description: 'dispatches event type'
-        required: true           
-      packer_directory:
+        description: 'Image repository'
+        required: true        
+      tag:
         type: string
-        description: 'packer directory'
+        description: 'Image tag'
         required: true
-      packer_version:
-        type: string
-        description: 'packer version'
-        default: '1.8.5'
-        required: false
-      packer_var_file:
-        type: string
-        description: 'packer var file'
-        required: true  
-  
+        
 jobs:
   argocd:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
@@ -36,14 +27,13 @@ jobs:
          fetch-depth: 0
     - name: Setup yq
       run: |
-             curl -LO https://github.com/mikefarah/yq/releases/download/v4.35.1/yq_linux_arm64
+             curl -LO https://github.com/mikefarah/yq/releases/download/${{ inputs.yq_version }}/yq_linux_arm64
              chmod +x yq_linux_arm64
              mv yq_linux_arm64 yq
              sudo mv yq /usr/local/bin/
-    - name: debug
+    - name: Change image tag
       run: |
-             tag="gobank:20130901x"
-             export IMAGE_TAG=$tag
-             ls -1
+             REPOSITORY=$(echo "${{ inputs.repository }}" | cut -d'/' -f3)
+             export IMAGE_TAG=$REPOSITORY:${{ inputs.tag }}
              yq eval -i '.frankenstein.imageTag = env(IMAGE_TAG)' charts/values.yaml
              cat charts/values.yaml
