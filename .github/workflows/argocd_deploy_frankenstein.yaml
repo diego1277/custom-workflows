@@ -2,6 +2,29 @@ name: Argocd Frankenstein
 
 on:
   workflow_call:
+    inputs:
+      dispatches_repo:
+        type: string
+        description: 'terraform repo'
+        default: 'https://api.github.com/repos/doliveiraorg/terraform/dispatches'
+        required: false
+      dispatches_event_type:
+        type: string
+        description: 'dispatches event type'
+        required: true           
+      packer_directory:
+        type: string
+        description: 'packer directory'
+        required: true
+      packer_version:
+        type: string
+        description: 'packer version'
+        default: '1.8.5'
+        required: false
+      packer_var_file:
+        type: string
+        description: 'packer var file'
+        required: true  
   
 jobs:
   argocd:
