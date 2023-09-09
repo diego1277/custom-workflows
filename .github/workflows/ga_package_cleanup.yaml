@@ -30,9 +30,9 @@ jobs:
       run: |
         if [ -z "$PACKAGE_NAME_CUSTOM" ]; then
             PACKAGE_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
-            echo "::set-output name=package_name::$PACKAGE_NAME"
+            echo "package_name=$PACKAGE_NAME" >> $GITHUB_OUTPUT
         else
-            echo "::set-output name=package_name::$PACKAGE_NAME_CUSTOM"
+            echo "package_name=$PACKAGE_NAME_CUSTOM" >> $GITHUB_OUTPUT
         fi
     - name: clenup package
       id: cleanup_package
