@@ -34,15 +34,11 @@ jobs:
         else
             echo "package_name=$PACKAGE_NAME_CUSTOM" >> $GITHUB_OUTPUT
         fi
-    - name: clenup package
-      run: |
-             echo ${{ steps.setup_env.outputs.package_name }}
-
-#    - uses: smartsquaregmbh/delete-old-packages@v0.7.0
-#      with:
-#        token: ${{ secrets.GH_ACCESS_TOKEN }}
-#        organization: ${{ inputs.organization }}
-#        type: 'container'
-#        keep: 3    
-#        names: |
-#           ${{ github.repository }}   
+    - uses: smartsquaregmbh/delete-old-packages@v0.7.0
+      with:
+        token: ${{ secrets.GH_ACCESS_TOKEN }}
+        organization: ${{ inputs.organization }}
+        type: 'container'
+        keep: 3    
+        names: |
+           ${{ steps.setup_env.outputs.package_name }}   
