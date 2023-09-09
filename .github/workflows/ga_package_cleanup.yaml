@@ -23,16 +23,22 @@ jobs:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
     name: cleanup
     steps:
-    - name: repo name env
+    - name: setup env
+      id: setup_env
       env: 
-        PACKAGE_NAME_TEMP: ${{ inputs.package_name }}
+        PACKAGE_NAME_CUSTOM: ${{ inputs.package_name }}
       run: |
-        if [ -z "$PACKAGE_NAME_TEMP" ]; then
+        if [ -z "$PACKAGE_NAME_CUSTOM" ]; then
             PACKAGE_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
-            echo $PACKAGE_NAME
+            echo "::set-output name=package_name::$PACKAGE_NAME"
         else
-            echo $PACKAGE_NAME_TEMP
-        fi    
+            echo "::set-output name=package_name::$PACKAGE_NAME_CUSTOM"
+        fi
+    - name: clenup package
+      id: cleanup_package
+      run: |
+             echo ${{ steps.outputs.setup_env.package_name }}
+
 #    - uses: smartsquaregmbh/delete-old-packages@v0.7.0
 #      with:
 #        token: ${{ secrets.GH_ACCESS_TOKEN }}
