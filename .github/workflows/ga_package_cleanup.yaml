@@ -1,8 +1,30 @@
 name: Cleanup
 
 on:
-  workflow_call:
-  
+  inputs:    
+    organization:
+      type: string
+      description: 'Nome da ga organization'
+      required: false
+      default: ${{ github.repository_owner }}
+    username:
+      type: string
+      description: 'Username do container registry'
+      required: false
+      default: ${{ github.actor }}
+    repository:
+      type: string
+      description: 'Repositorio'
+      required: false
+      default: ${{ github.repository }}
+  outputs:
+    repository:
+      description: "Repositorio"
+      value: ${{ jobs.buildx.outputs.repository }}
+    tag:
+      description: "Id da tag"
+      value: ${{ jobs.buildx.outputs.tag }}
+
 jobs:
   plan:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
@@ -15,8 +37,8 @@ jobs:
               echo $REPOSITORY
     - uses: smartsquaregmbh/delete-old-packages@v0.7.0
       with:
-        token: ${{ secrets.GH_ACCESS_TOKEN }}
-        organization: ${{ github.repository_owner }}
+        token: ${{ secret.GH_ACCESS_TOKEN }}
+        organization: ${{ inputs.organization }}
         type: 'container'
         keep: 3    
         names: |
