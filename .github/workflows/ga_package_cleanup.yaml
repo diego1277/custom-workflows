@@ -35,9 +35,8 @@ jobs:
             echo "package_name=$PACKAGE_NAME_CUSTOM" >> $GITHUB_OUTPUT
         fi
     - name: clenup package
-      id: cleanup_package
       run: |
-             echo ${{ steps.outputs.setup_env.package_name }}
+             echo ${{ steps.setup_env.outputs.package_name }}
 
 #    - uses: smartsquaregmbh/delete-old-packages@v0.7.0
 #      with:
