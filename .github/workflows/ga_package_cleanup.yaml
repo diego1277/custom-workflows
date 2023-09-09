@@ -20,7 +20,7 @@ jobs:
     steps:
     - name: repo name env
       run: |
-        PACKAGE_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f3)
+        PACKAGE_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
         echo $PACKAGE_NAME
 #    - uses: smartsquaregmbh/delete-old-packages@v0.7.0
 #      with:
