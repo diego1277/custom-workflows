@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: smartsquaregmbh/delete-old-packages@v0.7.0
       with:
-        token: ${{ secret.GH_ACCESS_TOKEN }}
+        token: ${{ secrets.GH_ACCESS_TOKEN }}
         organization: ${{ inputs.organization }}
         type: 'container'
         keep: 3    
