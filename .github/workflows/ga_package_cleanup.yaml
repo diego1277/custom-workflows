@@ -13,6 +13,11 @@ on:
         description: 'Repositorio'
         required: false
         default: ${{ github.repository }}
+      package_name:
+        type: string
+        description: 'Nome do package'
+        required: false
+        
 jobs:
   plan:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
@@ -20,8 +25,9 @@ jobs:
     steps:
     - name: repo name env
       run: |
-        PACKAGE_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
-        echo $PACKAGE_NAME
+        echo ${{ inputs.package_name }}
+      #PACKAGE_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+      #echo $PACKAGE_NAME
 #    - uses: smartsquaregmbh/delete-old-packages@v0.7.0
 #      with:
 #        token: ${{ secrets.GH_ACCESS_TOKEN }}
