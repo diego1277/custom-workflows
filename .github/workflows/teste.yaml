@@ -13,12 +13,13 @@ jobs:
   plan:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
     name: teste
+    env:
+      teste: ${{ github.repository }} 
     steps:
     - name: simple teste
       run: |
               echo ${{ github.repository_owner }}
-              echo ${{ github.repository }} 
-              REPOSITORY=$(echo "${{ github.repository }}" | cut -d'/' -f3)
+              REPOSITORY=$(echo "${teste}" | cut -d'/' -f3)
               echo $REPOSITORY
 #    - uses: smartsquaregmbh/delete-old-packages@v0.7.0
 #      with:
