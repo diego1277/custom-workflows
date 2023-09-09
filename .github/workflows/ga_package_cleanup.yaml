@@ -1,0 +1,23 @@
+name: Cleanup
+
+on:
+  workflow_call:
+  
+jobs:
+  plan:
+    runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
+    name: cleanup
+    steps:
+    - name: simple teste
+      run: |
+              echo 
+              REPOSITORY=$(echo "${teste}" | cut -d'/' -f3)
+              echo $REPOSITORY
+    - uses: smartsquaregmbh/delete-old-packages@v0.7.0
+      with:
+        token: ${{ secrets.GH_ACCESS_TOKEN }}
+        organization: ${{ github.repository_owner }}
+        type: 'container'
+        keep: 3    
+        names: |
+          gobank    
