@@ -17,7 +17,8 @@ jobs:
     - name: simple teste
       run: |
               echo ${{ github.repository_owner }}
-              echo ${{ github.action.repository }}
+              echo ${{ github.actor }}
+              echo ${{ github.repository }}             
 #    - uses: smartsquaregmbh/delete-old-packages@v0.7.0
 #      with:
 #        token: ${{ secrets.GH_ACCESS_TOKEN }}
