@@ -14,8 +14,9 @@ jobs:
     runs-on: [ doliveiraorg-k8s-runner ]
     name: teste
     steps:
-    - runs
-    
+    - name: simple teste
+      run: |
+              echo ${{ github.repository_owner }}
     
 #    - uses: smartsquaregmbh/delete-old-packages@v0.7.0
 #      with:
