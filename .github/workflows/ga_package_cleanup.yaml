@@ -24,10 +24,15 @@ jobs:
     name: cleanup
     steps:
     - name: repo name env
+      env: 
+        PACKAGE_NAME_TEMP: ${{ inputs.package_name }}
       run: |
-        echo ${{ inputs.package_name }}
-      #PACKAGE_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
-      #echo $PACKAGE_NAME
+        if [ -z "$PACKAGE_NAME_TEMP" ]; then
+            PACKAGE_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+            echo $PACKAGE_NAME
+        else
+            echo $PACKAGE_NAME_TEMP
+        fi    
 #    - uses: smartsquaregmbh/delete-old-packages@v0.7.0
 #      with:
 #        token: ${{ secrets.GH_ACCESS_TOKEN }}
