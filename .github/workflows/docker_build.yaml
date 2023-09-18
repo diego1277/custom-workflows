@@ -59,7 +59,7 @@ jobs:
       uses: docker/setup-buildx-action@v2
     - name: Docker build and push
       if: inputs.enable_buildx == 'true'
-      id: build_push
+      #id: build_push
       run: |
           DATE=$(date +'%Y%m%d')
           REPOSITORY="${{ inputs.registry }}/${{ inputs.repository }}"
@@ -72,12 +72,15 @@ jobs:
 
     - name: Docker build and push
       if: inputs.enable_buildx == 'false'
+      id: build_push
       run: |
           DATE=$(date +'%Y%m%d')
           REPOSITORY="${{ inputs.registry }}/${{ inputs.repository }}"
           TAG="${DATE}${GITHUB_RUN_NUMBER}"
           
           docker build -t $REPOSITORY:$TAG -t $REPOSITORY:latest . -f ${{ inputs.dockerfile_path }}/Dockerfile
-          docker push $REPOSITORY:$TAG $REPOSITORY:latest 
+          docker push $REPOSITORY:$TAG 
+          docker push $REPOSITORY:latest 
+          
           echo "::set-output name=repository::$REPOSITORY"
           echo "::set-output name=tag::$TAG"
