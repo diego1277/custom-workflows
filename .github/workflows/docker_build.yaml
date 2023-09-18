@@ -78,6 +78,6 @@ jobs:
           TAG="${DATE}${GITHUB_RUN_NUMBER}"
           
           docker build -t $REPOSITORY:$TAG -t $REPOSITORY:latest . -f ${{ inputs.dockerfile_path }}/Dockerfile
-          docker push  -t $REPOSITORY:$TAG -t $REPOSITORY:latest 
+          docker push $REPOSITORY:$TAG $REPOSITORY:latest 
           echo "::set-output name=repository::$REPOSITORY"
           echo "::set-output name=tag::$TAG"
