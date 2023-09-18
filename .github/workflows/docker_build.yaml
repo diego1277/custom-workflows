@@ -31,15 +31,15 @@ on:
     outputs:
       repository:
         description: "Repositorio"
-        value: ${{ jobs.buildx.outputs.repository }}
+        value: ${{ jobs.build.outputs.repository }}
       tag:
         description: "Id da tag"
-        value: ${{ jobs.buildx.outputs.tag }}
+        value: ${{ jobs.build.outputs.tag }}
  
 jobs:
-  buildx:
+  build:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
-    name: Buildx
+    name: Build
     permissions:
       contents: read
       packages: write
@@ -82,5 +82,5 @@ jobs:
           docker push $REPOSITORY:$TAG 
           docker push $REPOSITORY:latest 
           
-          echo "::set-output name=repository::$REPOSITORY"
-          echo "::set-output name=tag::$TAG"
+          echo "repository=$REPOSITORY" >> $GITHUB_OUTPUT
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
