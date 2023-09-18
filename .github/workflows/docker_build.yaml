@@ -55,6 +55,7 @@ jobs:
         username: ${{ inputs.username }}
         password: ${{ github.token }}
     - name: Set up Docker Buildx
+      if: inputs.enable_buildx == 'true'
       uses: docker/setup-buildx-action@v2
     - name: Docker build and push
       if: inputs.enable_buildx == 'true'
