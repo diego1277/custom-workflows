@@ -38,7 +38,7 @@ on:
  
 jobs:
   buildx:
-    runs-on: runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
+    runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
     name: Buildx
     permissions:
       contents: read
@@ -70,7 +70,7 @@ jobs:
           echo "::set-output name=tag::$TAG"
 
     - name: Docker build and push
-      if: inputs.enable_buildx == 'true'
+      if: inputs.enable_buildx == 'false'
       run: |
           DATE=$(date +'%Y%m%d')
           REPOSITORY="${{ inputs.registry }}/${{ inputs.repository }}"
