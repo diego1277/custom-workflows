@@ -69,3 +69,14 @@ jobs:
           echo "::set-output name=repository::$REPOSITORY"
           echo "::set-output name=tag::$TAG"
 
+    - name: Docker build and push
+      if: inputs.enable_buildx == 'true'
+      run: |
+          DATE=$(date +'%Y%m%d')
+          REPOSITORY="${{ inputs.registry }}/${{ inputs.repository }}"
+          TAG="${DATE}${GITHUB_RUN_NUMBER}"
+          
+          docker buildx build -t $REPOSITORY:$TAG -t $REPOSITORY:latest --push . -f ${{ inputs.dockerfile_path }}/Dockerfile
+
+          echo "::set-output name=repository::$REPOSITORY"
+          echo "::set-output name=tag::$TAG"
