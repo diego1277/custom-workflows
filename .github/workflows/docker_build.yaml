@@ -39,7 +39,7 @@ on:
 jobs:
   build:
     runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
-    name: Build
+    name: Docker build
     permissions:
       contents: read
       packages: write
