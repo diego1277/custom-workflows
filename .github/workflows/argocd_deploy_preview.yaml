@@ -1,0 +1,46 @@
+name: Argocd Frankenstein
+
+on:
+  workflow_call:
+    inputs:
+      yq_version:
+        type: string
+        description: 'yq version'
+        default: 'v4.35.1'
+        required: false
+      repository:
+        type: string
+        description: 'Image repository'
+        required: true        
+      tag:
+        type: string
+        description: 'Image tag'
+        required: true
+        
+jobs:
+  argocd:
+    runs-on: ["self-hosted","Linux","ARM64","runner-devops"]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+         fetch-depth: 0
+    - name: Setup yq
+      run: |
+             curl -LO https://github.com/mikefarah/yq/releases/download/${{ inputs.yq_version }}/yq_linux_arm64
+             chmod +x yq_linux_arm64
+             mv yq_linux_arm64 yq
+             sudo mv yq /usr/local/bin/
+    - name: Change image tag
+      run: |
+             REPOSITORY=$(echo "${{ inputs.repository }}" | cut -d'/' -f3)
+             export IMAGE_TAG=$REPOSITORY:${{ inputs.tag }}
+             yq eval -i '.frankenstein.tag = env(IMAGE_TAG)' charts/values.yaml
+             cat charts/values.yaml
+    - name: 🚀 Commit to main branch
+      run: |
+        git config --local user.name github-actions
+        git config --local user.email diego.dso123@gmail.com
+        git add charts/values.yaml
+        git commit -m "🖉 Update changelog with ${GITHUB_REF#refs/*/}"
+        git push
